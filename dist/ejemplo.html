@@ -9,24 +9,28 @@
   <link rel="stylesheet" href="../css/print.css" media="print">
 </head>
 <body>
-  <!-- CONTROLES -->
+
+  <!-- Controles -->
   <nav class="controls-bar container-fluid d-flex justify-content-between align-items-center">
     <div class="d-flex gap-2 align-items-center">
       <a href="../index.html" class="btn btn-outline-secondary btn-sm">&larr; Índice</a>
-      <div class="btn-group shadow-sm" role="group">
-        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm">-</button>
+      
+      <div class="btn-group shadow-sm" role="group" aria-label="Transposición">
+        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm" title="Bajar medio tono">-</button>
         <button id="btn-transpose-reset" class="btn btn-outline-primary btn-sm fw-bold">Tono</button>
-        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm">+</button>
+        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm" title="Subir medio tono">+</button>
       </div>
+
       <button id="btn-toggle-chords" class="btn btn-outline-secondary btn-sm">Ocultar acordes</button>
     </div>
+    
     <div>
       <button id="btn-theme-toggle" class="btn btn-sm btn-dark">🌙 Modo Oscuro</button>
-      <button onclick="window.print()" class="btn btn-sm btn-success">🖨️ Imprimir</button>
+      <button onclick="window.print()" class="btn btn-sm btn-success" title="Imprimir o guardar como PDF">🖨️ Imprimir</button>
     </div>
   </nav>
 
-  <!-- CANCIÓN -->
+  <!-- Contenedor de la canción -->
   <div class="container" id="song-container">
     <header class="song-header mb-4"><h1 class="song-title">Zamba de mi esperanza</h1><h2 class="song-artist text-muted h5">Jorge Cafrune</h2></header><main class="song-body"><div class="song-line line-line"><span class="text-segment">Intro</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba de mi espe</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ranza,</span></div><div class="song-line line-line"><span class="text-segment">amanecida como un que</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">rer.</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Sueño, sueño del </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">alma,</span></div><div class="song-line line-line"><span class="text-segment">que a </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">veces muere sin </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">flore</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">cer.</span></div><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba, a ti te </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">canto,</span></div><div class="song-line line-line"><span class="text-segment">porque tu canto derrama a</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">mor.</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Caricia de tu pa</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">ñuelo,</span></div><div class="song-line line-line"><span class="text-segment">que va envol</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">viendo mi co</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ra</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">zón.</span></div><div class="song-line line-line"><span class="text-segment"></span></div><pre class="tab-block font-monospace bg-light p-2 rounded border">e|-------5-7-----7-|-8-----8-2-----2-|-0---------0-----|-----------------|
 B|-----5-----5-----|---5-----3-------|---1---1-----1---|-0-1-1-----------|
@@ -36,7 +40,7 @@ A|-----------------|-----------------|-----------------|-2-0-0----0-/8-7-|
 E|-----------------|-----------------|-----------------|-----------------|</pre><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Alemán H: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Alemán B: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Acorde raro: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Do#m7(b5)/Mi</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment"></span></div></main>
   </div>
 
-  <!-- DATOS -->
+  <!-- Datos originales -->
   <script type="text/plain" id="original-chordpro">
     {title: Zamba de mi esperanza}
 {artist: Jorge Cafrune}
@@ -71,7 +75,7 @@ Acorde raro: [C#m7(b5)/E]
 
   </script>
 
-  <!-- BUNDLE (siempre al final) -->
+  <!-- Bundle de JavaScript (siempre al final) -->
   <script>var Cancionero = (() => {
   // src/js/parser.js
   var NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];

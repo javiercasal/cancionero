@@ -9,34 +9,38 @@
   <link rel="stylesheet" href="../css/print.css" media="print">
 </head>
 <body>
-  <!-- CONTROLES -->
+
+  <!-- Controles -->
   <nav class="controls-bar container-fluid d-flex justify-content-between align-items-center">
     <div class="d-flex gap-2 align-items-center">
       <a href="../index.html" class="btn btn-outline-secondary btn-sm">&larr; Índice</a>
-      <div class="btn-group shadow-sm" role="group">
-        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm">-</button>
+      
+      <div class="btn-group shadow-sm" role="group" aria-label="Transposición">
+        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm" title="Bajar medio tono">-</button>
         <button id="btn-transpose-reset" class="btn btn-outline-primary btn-sm fw-bold">Tono</button>
-        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm">+</button>
+        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm" title="Subir medio tono">+</button>
       </div>
+
       <button id="btn-toggle-chords" class="btn btn-outline-secondary btn-sm">Ocultar acordes</button>
     </div>
+    
     <div>
       <button id="btn-theme-toggle" class="btn btn-sm btn-dark">🌙 Modo Oscuro</button>
-      <button onclick="window.print()" class="btn btn-sm btn-success">🖨️ Imprimir</button>
+      <button onclick="window.print()" class="btn btn-sm btn-success" title="Imprimir o guardar como PDF">🖨️ Imprimir</button>
     </div>
   </nav>
 
-  <!-- CANCIÓN -->
+  <!-- Contenedor de la canción -->
   <div class="container" id="song-container">
     {{RENDERED_SONG}}
   </div>
 
-  <!-- DATOS -->
+  <!-- Datos originales -->
   <script type="text/plain" id="original-chordpro">
     {{CHORDPRO_DATA}}
   </script>
 
-  <!-- BUNDLE (siempre al final) -->
+  <!-- Bundle de JavaScript (siempre al final) -->
   {{BUNDLED_JS}}
 </body>
 </html>
