@@ -51,6 +51,20 @@ export const renderSong = (song, container) => {
       lineDiv.classList.add('fst-italic', 'text-muted', 'my-2');
     }
 
+    if (line.type === 'tab') {
+      let tabContent = '';
+      while (i < song.lines.length && song.lines[i].type === 'tab') {
+        tabContent += getPlainText(song.lines[i]) + '\n';
+        i++;
+      }
+      tabContent = tabContent.trimEnd();
+      const pre = document.createElement('pre');
+      pre.className = 'tab-block';
+      pre.textContent = tabContent;
+      body.appendChild(pre);
+      continue;
+    }
+
     // Elementos de la línea
     line.elements.forEach(el => {
       if (el.type === 'text' || el.type === 'space') {

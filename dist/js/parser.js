@@ -1,15 +1,13 @@
-// source/js/parser.js
+// parser.js
 
 // ---------- CONSTANTES Y UTILIDADES PARA ACORDES ----------
 
 const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-// Mapeo de notación alemana a inglesa (solo para H)
 const GERMAN_TO_EN = {
-  'H': 'B',    // Si natural
+  'H': 'B',
 };
 
-// Bemoles a sostenidos (solo para raíz, no para bajo)
 const FLAT_TO_SHARP = {
   'Bb': 'A#',
   'Db': 'C#',
@@ -19,20 +17,13 @@ const FLAT_TO_SHARP = {
   'Ebb': 'D',
   'Abb': 'G',
   'Bbb': 'A',
-  'B': 'A#',   // B (alemán) es Si bemol → se convierte a A# en notación de sostenidos
+  'B': 'A#',
 };
 
-/**
- * Normaliza una nota (raíz) a su equivalente en sostenidos.
- * isBass=true evita convertir B a A# (para bajos).
- */
 function normalizeRoot(root, isBass = false) {
   if (!root) return root;
-  // Si es alemán H -> B
   if (GERMAN_TO_EN[root]) return GERMAN_TO_EN[root];
-  // Si no es bajo y está en el mapa de bemoles, lo convertimos
   if (!isBass && FLAT_TO_SHARP[root]) return FLAT_TO_SHARP[root];
-  // Manejar bemoles no mapeados (ej: "Cb")
   if (!isBass && root.includes('b')) {
     const match = root.match(/^([A-G])b(.*)$/);
     if (match) {
@@ -49,9 +40,6 @@ function normalizeRoot(root, isBass = false) {
   return root;
 }
 
-/**
- * Extrae raíz, sufijo y bajo de un string de acorde.
- */
 export function parseChord(chordStr) {
   if (!chordStr) return null;
   chordStr = chordStr.trim();
@@ -61,13 +49,11 @@ export function parseChord(chordStr) {
   if (slashIndex !== -1) {
     rootPart = chordStr.substring(0, slashIndex);
     bassPart = chordStr.substring(slashIndex + 1);
-    // El bajo NO se normaliza a sostenido (se mantiene como está, solo se convierte H->B si es alemán)
     bassPart = normalizeRoot(bassPart, true);
   } else {
     rootPart = chordStr;
   }
 
-  // Permitir notas A-G y H (alemán) con # o b opcional
   const match = rootPart.match(/^([A-H][#b]?)(.*)$/);
   if (!match) {
     const normalized = normalizeRoot(rootPart, false);
@@ -94,7 +80,7 @@ export function stringifyChord(chordObj) {
   return result;
 }
 
-// ---------- PARSER DE CANCIONES COMPLETAS (CHORDPRO) ----------
+// ---------- PARSER DE CANCIONES COMPLETAS ----------
 
 const DIRECTIVE_PATTERNS = {
   title: /^\{title\s*:\s*(.+?)\}$/i,
@@ -106,6 +92,9 @@ const DIRECTIVE_PATTERNS = {
   soc: /^\{soc\}$/i,
   eoc: /^\{eoc\}$/i,
   tab: /^\{tab\s*:\s*(.+?)\}$/i,
+  // NUEVAS directivas para tablatura
+  sot: /^\{sot\}$/i,
+  eot: /^\{eot\}$/i,
   define: /^\{define\s*:\s*(.+?)\}$/i,
   tempo: /^\{tempo\s*:\s*(.+?)\}$/i,
   time: /^\{time\s*:\s*(.+?)\}$/i,
@@ -150,7 +139,6 @@ function parseDirective(line) {
 }
 
 export function parseChordPro(text) {
-  // Si el texto está completamente vacío, devolvemos AST vacío
   if (!text || text.trim() === '') {
     return { metadata: {}, lines: [] };
   }
@@ -159,15 +147,17 @@ export function parseChordPro(text) {
   const metadata = {};
   const parsedLines = [];
   let inChorus = false;
+  let inTab = false; // <-- NUEVO: estado para tablatura
 
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i];
     const trimmed = raw.trim();
 
-    // Línea vacía → la conservamos como línea de texto vacío (importante para índices)
+    // Líneas vacías
     if (trimmed === '') {
+      // Si estamos dentro de una tablatura, la línea vacía también se marca como tab
       parsedLines.push({
-        type: 'line',
+        type: inTab ? 'tab' : 'line',
         elements: [{ type: 'text', value: '' }],
         isChorus: inChorus,
       });
@@ -176,6 +166,7 @@ export function parseChordPro(text) {
 
     const directive = parseDirective(trimmed);
     if (directive) {
+      // Metadatos
       if (METADATA_DIRECTIVES.includes(directive.name)) {
         let value = directive.value;
         if (directive.name === 'key') {
@@ -185,8 +176,10 @@ export function parseChordPro(text) {
           }
         }
         metadata[directive.name] = value;
-        continue; // no se añade a lines
+        continue;
       }
+
+      // Inicio / Fin de Chorus
       if (directive.name === 'soc') {
         inChorus = true;
         parsedLines.push({ type: 'chorus_start' });
@@ -197,6 +190,20 @@ export function parseChordPro(text) {
         parsedLines.push({ type: 'chorus_end' });
         continue;
       }
+
+      // --- NUEVO: Inicio / Fin de Tablatura ---
+      if (directive.name === 'sot') {
+        inTab = true;
+        // No agregamos línea al AST (es solo un marcador)
+        continue;
+      }
+      if (directive.name === 'eot') {
+        inTab = false;
+        // No agregamos línea al AST
+        continue;
+      }
+
+      // Otras directivas (comment, tab, define, tempo, time, etc.)
       parsedLines.push({
         type: 'directive_line',
         directive: directive.name,
@@ -206,12 +213,21 @@ export function parseChordPro(text) {
       continue;
     }
 
-    // Línea normal con posibles acordes
+    // Línea normal (con posible contenido y acordes)
     const elements = parseLineWithChords(raw);
     parsedLines.push({
-      type: 'line',
+      type: inTab ? 'tab' : 'line', // <-- Si estamos en tab, se marca como 'tab'
       elements,
       isChorus: inChorus,
+    });
+  }
+
+  // Si no hay líneas pero el input no está vacío, añadir una línea vacía (fallback)
+  if (parsedLines.length === 0 && text && text.trim() !== '') {
+    parsedLines.push({
+      type: 'line',
+      elements: [{ type: 'text', value: '' }],
+      isChorus: false,
     });
   }
 
@@ -221,11 +237,12 @@ export function parseChordPro(text) {
   };
 }
 
-// Alias para compatibilidad
+// Alias para compatibilidad (si se usa en otro lado)
 export const parseChordProLegacy = parseChordPro;
 
+// Funciones auxiliares para extraer información del AST
 export function getPlainText(line) {
-  if (line.type !== 'line') return '';
+  if (line.type !== 'line' && line.type !== 'tab') return '';
   return line.elements
     .filter(el => el.type === 'text')
     .map(el => el.value)

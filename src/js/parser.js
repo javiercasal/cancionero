@@ -92,6 +92,9 @@ const DIRECTIVE_PATTERNS = {
   soc: /^\{soc\}$/i,
   eoc: /^\{eoc\}$/i,
   tab: /^\{tab\s*:\s*(.+?)\}$/i,
+  // NUEVAS directivas para tablatura
+  sot: /^\{sot\}$/i,
+  eot: /^\{eot\}$/i,
   define: /^\{define\s*:\s*(.+?)\}$/i,
   tempo: /^\{tempo\s*:\s*(.+?)\}$/i,
   time: /^\{time\s*:\s*(.+?)\}$/i,
@@ -144,15 +147,16 @@ export function parseChordPro(text) {
   const metadata = {};
   const parsedLines = [];
   let inChorus = false;
+  let inTab = false;
 
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i];
     const trimmed = raw.trim();
 
-    // Conservar líneas vacías
+    // Líneas vacías
     if (trimmed === '') {
       parsedLines.push({
-        type: 'line',
+        type: inTab ? 'tab' : 'line',
         elements: [{ type: 'text', value: '' }],
         isChorus: inChorus,
       });
@@ -161,6 +165,7 @@ export function parseChordPro(text) {
 
     const directive = parseDirective(trimmed);
     if (directive) {
+      // Metadatos
       if (METADATA_DIRECTIVES.includes(directive.name)) {
         let value = directive.value;
         if (directive.name === 'key') {
@@ -172,6 +177,8 @@ export function parseChordPro(text) {
         metadata[directive.name] = value;
         continue;
       }
+
+      // Inicio / Fin de Chorus
       if (directive.name === 'soc') {
         inChorus = true;
         parsedLines.push({ type: 'chorus_start' });
@@ -182,6 +189,18 @@ export function parseChordPro(text) {
         parsedLines.push({ type: 'chorus_end' });
         continue;
       }
+
+      // Inicio / Fin de Tablatura
+      if (directive.name === 'sot') {
+        inTab = true;
+        continue;
+      }
+      if (directive.name === 'eot') {
+        inTab = false;
+        continue;
+      }
+
+      // Otras directivas
       parsedLines.push({
         type: 'directive_line',
         directive: directive.name,
@@ -191,16 +210,16 @@ export function parseChordPro(text) {
       continue;
     }
 
+    // Línea normal (con posible contenido y acordes)
     const elements = parseLineWithChords(raw);
     parsedLines.push({
-      type: 'line',
+      type: inTab ? 'tab' : 'line',
       elements,
       isChorus: inChorus,
     });
   }
 
-  // Si no hay líneas pero el input no está vacío, añadir una línea vacía para evitar undefined
-  // (esto es un fallback seguro)
+  // Fallback
   if (parsedLines.length === 0 && text && text.trim() !== '') {
     parsedLines.push({
       type: 'line',
@@ -218,7 +237,7 @@ export function parseChordPro(text) {
 export const parseChordProLegacy = parseChordPro;
 
 export function getPlainText(line) {
-  if (line.type !== 'line') return '';
+  if (line.type !== 'line' && line.type !== 'tab') return '';
   return line.elements
     .filter(el => el.type === 'text')
     .map(el => el.value)
