@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zamba de mi esperanza - Jorge Cafrune | Cancionero</title>
+  <meta name="description" content="Acordes y letra de Zamba de mi esperanza por Jorge Cafrune">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Zamba de mi esperanza - Jorge Cafrune">
+  <meta property="og:description" content="Acordes y letra para tocar Zamba de mi esperanza">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/logo-cancionero.png">
+  
+  <!-- Bootstrap CSS (Local) -->
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body>
+
+  <!-- Controles (ocultos en impresión) -->
+  <nav class="controls-bar container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex gap-2 align-items-center">
+      <a href="../index.html" class="btn btn-outline-secondary btn-sm" aria-label="Volver al índice">&larr; Índice</a>
+      
+      <div class="btn-group shadow-sm" role="group" aria-label="Transposición">
+        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm" title="Bajar medio tono">-</button>
+        <button id="btn-transpose-reset" class="btn btn-outline-primary btn-sm fw-bold">Tono</button>
+        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm" title="Subir medio tono">+</button>
+      </div>
+
+      <button id="btn-toggle-chords" class="btn btn-outline-secondary btn-sm">Ocultar acordes</button>
+    </div>
+    
+    <div>
+      <button id="btn-theme-toggle" class="btn btn-sm btn-dark">🌙 Modo Oscuro</button>
+      <button onclick="window.print()" class="btn btn-sm btn-success" title="Imprimir o guardar como PDF">🖨️ Imprimir</button>
+    </div>
+  </nav>
+
+  <!-- Contenedor principal de la canción -->
+  <div class="container" id="song-container">
+    <!-- El contenido se inyectará aquí o será renderizado dinámicamente -->
+  </div>
+
+  <!-- Datos originales embebidos -->
+  <script type="text/plain" id="original-chordpro">
+{{CHORDPRO}}
+  </script>
+
+  <!-- Scripts -->
+  <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Usar type="module" para cargar la lógica local -->
+  <script type="module" src="../js/main.js"></script>
+
+</body>
+</html>

@@ -30,7 +30,17 @@ export const renderSong = (song, container) => {
   while (i < song.lines.length) {
     const line = song.lines[i];
 
-    // ---- Bloque de tablatura ----
+    // ---- Ignorar líneas especiales que no deben renderizarse ----
+    if (
+      line.type === 'directive_line' ||
+      line.type === 'chorus_start' ||
+      line.type === 'chorus_end'
+    ) {
+      i++;
+      continue;
+    }
+
+    // ---- Bloque de tablatura (agrupado) ----
     if (line.type === 'tab') {
       let tabContent = '';
       while (i < song.lines.length && song.lines[i].type === 'tab') {
@@ -42,29 +52,29 @@ export const renderSong = (song, container) => {
       pre.className = 'tab-block font-monospace bg-light p-2 rounded border';
       pre.textContent = tabContent;
       body.appendChild(pre);
-      continue; // Válido dentro del while
-    }
-
-    // Líneas vacías (fallback)
-    if (line.type === 'empty') {
-      const brDiv = document.createElement('div');
-      brDiv.className = 'song-line empty-line';
-      brDiv.style.height = '1.5em';
-      body.appendChild(brDiv);
-      i++;
       continue;
     }
 
-    // Líneas normales
+    // ---- Líneas normales (con o sin acordes) ----
+    // Asegurar que elements exista (fallback)
+    if (!line.elements) {
+      line.elements = [{ type: 'text', value: '' }];
+    }
+
     const lineDiv = document.createElement('div');
     lineDiv.className = `song-line ${line.type}-line`;
 
+    // Aplicar clase si es estribillo
     if (line.isChorus) {
       lineDiv.classList.add('ps-3', 'border-start', 'border-3', 'border-primary', 'my-1');
-    } else if (line.type === 'comment') {
+    }
+
+    // Si es comentario, estilo cursiva
+    if (line.type === 'comment') {
       lineDiv.classList.add('fst-italic', 'text-muted', 'my-2');
     }
 
+    // Recorrer elementos de la línea
     line.elements.forEach(el => {
       if (el.type === 'text' || el.type === 'space') {
         const textSpan = document.createElement('span');
