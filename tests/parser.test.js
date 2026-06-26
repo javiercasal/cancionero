@@ -1,6 +1,7 @@
 import { parseChordPro, getPlainText, getAllDirectives } from '../src/js/parser.js';
 
 describe('ChordPro Parser', () => {
+  // ========== METADATOS ==========
   describe('Metadatos', () => {
     test('extrae título, artista, tono, capo', () => {
       const input = `
@@ -29,6 +30,7 @@ describe('ChordPro Parser', () => {
     });
   });
 
+  // ========== LÍNEAS CON ACORDES ==========
   describe('Líneas con acordes', () => {
     test('extrae acordes simples', () => {
       const input = `[C]Esta es [G]una canción`;
@@ -61,7 +63,7 @@ describe('ChordPro Parser', () => {
     test('línea vacía (entrada vacía)', () => {
       const input = ``;
       const ast = parseChordPro(input);
-      expect(ast.lines).toHaveLength(0); // Ahora sí
+      expect(ast.lines).toHaveLength(0);
     });
 
     test('múltiples líneas con y sin acordes', () => {
@@ -74,6 +76,7 @@ describe('ChordPro Parser', () => {
     });
   });
 
+  // ========== DIRECTIVAS ESPECIALES ==========
   describe('Directivas especiales', () => {
     test('{comment: ...} se guarda como directiva línea', () => {
       const input = `{comment: Esto es un comentario}`;
@@ -125,6 +128,7 @@ describe('ChordPro Parser', () => {
     });
   });
 
+  // ========== FUNCIONES AUXILIARES ==========
   describe('Funciones auxiliares', () => {
     test('getPlainText extrae solo texto de una línea', () => {
       const input = `[C]Hola [G]mundo`;
@@ -148,6 +152,7 @@ describe('ChordPro Parser', () => {
     });
   });
 
+  // ========== CASOS BORDE ==========
   describe('Casos borde', () => {
     test('Acordes sin texto después', () => {
       const input = `[C]`;
@@ -155,7 +160,7 @@ describe('ChordPro Parser', () => {
       const line = ast.lines[0];
       expect(line.elements).toEqual([
         { type: 'chord', value: 'C' },
-        { type: 'text', value: '' }, // ahora sí existe
+        { type: 'text', value: '' },
       ]);
     });
 
@@ -176,4 +181,44 @@ describe('ChordPro Parser', () => {
       expect(elems[2].value).toBe('Dos acordes');
     });
   });
+
+describe('Tablaturas con {sot}/{eot}', () => {
+  test('marca líneas como tipo tab dentro de {sot}...{eot}', () => {
+    const input = `{sot}\ne|-----|\nB|-----|\n{eot}`;
+    const ast = parseChordPro(input);
+    const tabs = ast.lines.filter(l => l.type === 'tab');
+    expect(tabs).toHaveLength(2);
+    expect(getPlainText(tabs[0])).toBe('e|-----|');
+    expect(getPlainText(tabs[1])).toBe('B|-----|');
+  });
+
+  test('líneas vacías dentro de tablatura se marcan como tab', () => {
+    const input = `{sot}\n\n\n{eot}`;
+    const ast = parseChordPro(input);
+    const tabs = ast.lines.filter(l => l.type === 'tab');
+    // AHORA espera 2 líneas vacías (tres saltos de línea = dos líneas vacías)
+    expect(tabs).toHaveLength(2);
+    expect(tabs[0].elements[0].value).toBe('');
+    expect(tabs[1].elements[0].value).toBe('');
+  });
+
+  test('las líneas fuera de {sot}/{eot} son líneas normales', () => {
+    const input = `[C]Canción\n{sot}\ntab1\ntab2\n{eot}\n[G]Final`;
+    const ast = parseChordPro(input);
+    const nonTabLines = ast.lines.filter(l => l.type !== 'tab');
+    expect(nonTabLines.length).toBeGreaterThanOrEqual(2);
+    expect(getPlainText(nonTabLines[0])).toContain('Canción');
+    const finalLine = nonTabLines.find(l => getPlainText(l).includes('Final'));
+    expect(finalLine).toBeDefined();
+    expect(finalLine.type).toBe('line');
+  });
+
+  test('soporte para directivas en minúsculas y mayúsculas', () => {
+    const input = `{SOT}\ne|--|\n{EOT}`;
+    const ast = parseChordPro(input);
+    const tabs = ast.lines.filter(l => l.type === 'tab');
+    expect(tabs).toHaveLength(1);
+    expect(getPlainText(tabs[0])).toBe('e|--|');
+  });
+});
 });

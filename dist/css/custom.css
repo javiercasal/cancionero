@@ -12,23 +12,17 @@ body {
   }
 }
 
-/* Área de canción */
 #song-container {
   margin-top: 2rem;
   margin-bottom: 4rem;
 }
 
-/* 
-  Línea de la canción.
-  white-space: pre preserva espacios en blanco literalmente.
-  overflow-x: auto permite scroll horizontal en móviles.
-*/
 .song-line {
   position: relative;
   white-space: pre;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-top: 1.2em; /* Espacio para los acordes */
+  padding-top: 1.2em;
   margin-bottom: 0.2em;
   min-height: 2.8em;
 }
@@ -38,7 +32,6 @@ body {
   padding-top: 0;
 }
 
-/* Estribillos */
 .chorus-line {
   background-color: var(--bs-light);
 }
@@ -47,24 +40,17 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* 
-  Contenedor del acorde.
-  position: absolute para no afectar el flujo del texto.
-*/
 .chord-wrapper {
   position: absolute;
   top: 0;
-  /* left se asigna con JS */
 }
 
 .chord {
   position: absolute;
   top: 0;
   font-size: 0.9em;
-  /* left se asigna con JS */
 }
 
-/* Ocultar acordes */
 .hide-chords .chord-wrapper,
 .hide-chords .chord {
   display: none !important;
@@ -74,7 +60,6 @@ body {
   min-height: 1.8em;
 }
 
-/* Barra de controles */
 .controls-bar {
   position: sticky;
   top: 0;
@@ -104,7 +89,6 @@ body {
   tab-size: 4;
 }
 
-/* Ajuste para modo oscuro */
 [data-bs-theme="dark"] .tab-block {
   background-color: #2b2b2b;
   border-color: #444;

@@ -133,24 +133,13 @@ const config = {
 /* --- js/parser.js --- */
 // parser.js
 
-// ---------- CONSTANTES Y UTILIDADES PARA ACORDES ----------
-
 const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-const GERMAN_TO_EN = {
-  'H': 'B',
-};
+const GERMAN_TO_EN = { 'H': 'B' };
 
 const FLAT_TO_SHARP = {
-  'Bb': 'A#',
-  'Db': 'C#',
-  'Eb': 'D#',
-  'Gb': 'F#',
-  'Ab': 'G#',
-  'Ebb': 'D',
-  'Abb': 'G',
-  'Bbb': 'A',
-  'B': 'A#',
+  'Bb': 'A#', 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#',
+  'Ebb': 'D', 'Abb': 'G', 'Bbb': 'A', 'B': 'A#'
 };
 
 function normalizeRoot(root, isBass = false) {
@@ -176,7 +165,6 @@ function normalizeRoot(root, isBass = false) {
 export function parseChord(chordStr) {
   if (!chordStr) return null;
   chordStr = chordStr.trim();
-
   let rootPart, bassPart = null;
   const slashIndex = chordStr.indexOf('/');
   if (slashIndex !== -1) {
@@ -186,34 +174,23 @@ export function parseChord(chordStr) {
   } else {
     rootPart = chordStr;
   }
-
   const match = rootPart.match(/^([A-H][#b]?)(.*)$/);
   if (!match) {
     const normalized = normalizeRoot(rootPart, false);
     return { root: normalized, suffix: '', bass: bassPart || null };
   }
-
   let root = match[1];
   const suffix = match[2] || '';
   root = normalizeRoot(root, false);
-
-  return {
-    root,
-    suffix,
-    bass: bassPart || null,
-  };
+  return { root, suffix, bass: bassPart || null };
 }
 
 export function stringifyChord(chordObj) {
   if (!chordObj) return '';
   let result = chordObj.root + (chordObj.suffix || '');
-  if (chordObj.bass) {
-    result += '/' + chordObj.bass;
-  }
+  if (chordObj.bass) result += '/' + chordObj.bass;
   return result;
 }
-
-// ---------- PARSER DE CANCIONES COMPLETAS ----------
 
 const DIRECTIVE_PATTERNS = {
   title: /^\{title\s*:\s*(.+?)\}$/i,
@@ -225,7 +202,6 @@ const DIRECTIVE_PATTERNS = {
   soc: /^\{soc\}$/i,
   eoc: /^\{eoc\}$/i,
   tab: /^\{tab\s*:\s*(.+?)\}$/i,
-  // NUEVAS directivas para tablatura
   sot: /^\{sot\}$/i,
   eot: /^\{eot\}$/i,
   define: /^\{define\s*:\s*(.+?)\}$/i,
@@ -241,22 +217,17 @@ function parseLineWithChords(line) {
   let lastIndex = 0;
   const chordRegex = /\[([^\]]+)\]/g;
   let match;
-
   while ((match = chordRegex.exec(remaining)) !== null) {
     const chordText = match[1].trim();
     const before = remaining.slice(lastIndex, match.index);
-    if (before) {
-      elements.push({ type: 'text', value: before });
-    }
+    if (before) elements.push({ type: 'text', value: before });
     const chordObj = parseChord(chordText);
     const normalizedChord = chordObj ? stringifyChord(chordObj) : chordText;
     elements.push({ type: 'chord', value: normalizedChord });
     lastIndex = match.index + match[0].length;
   }
-
   const after = remaining.slice(lastIndex);
   elements.push({ type: 'text', value: after });
-
   return elements;
 }
 
@@ -272,10 +243,7 @@ function parseDirective(line) {
 }
 
 export function parseChordPro(text) {
-  if (!text || text.trim() === '') {
-    return { metadata: {}, lines: [] };
-  }
-
+  if (!text || text.trim() === '') return { metadata: {}, lines: [] };
   const lines = text.split(/\r?\n/);
   const metadata = {};
   const parsedLines = [];
@@ -286,7 +254,6 @@ export function parseChordPro(text) {
     const raw = lines[i];
     const trimmed = raw.trim();
 
-    // Líneas vacías
     if (trimmed === '') {
       parsedLines.push({
         type: inTab ? 'tab' : 'line',
@@ -298,20 +265,15 @@ export function parseChordPro(text) {
 
     const directive = parseDirective(trimmed);
     if (directive) {
-      // Metadatos
       if (METADATA_DIRECTIVES.includes(directive.name)) {
         let value = directive.value;
         if (directive.name === 'key') {
           const chordObj = parseChord(value);
-          if (chordObj) {
-            value = stringifyChord(chordObj);
-          }
+          if (chordObj) value = stringifyChord(chordObj);
         }
         metadata[directive.name] = value;
         continue;
       }
-
-      // Inicio / Fin de Chorus
       if (directive.name === 'soc') {
         inChorus = true;
         parsedLines.push({ type: 'chorus_start' });
@@ -322,8 +284,6 @@ export function parseChordPro(text) {
         parsedLines.push({ type: 'chorus_end' });
         continue;
       }
-
-      // Inicio / Fin de Tablatura
       if (directive.name === 'sot') {
         inTab = true;
         continue;
@@ -332,8 +292,6 @@ export function parseChordPro(text) {
         inTab = false;
         continue;
       }
-
-      // Otras directivas
       parsedLines.push({
         type: 'directive_line',
         directive: directive.name,
@@ -343,7 +301,6 @@ export function parseChordPro(text) {
       continue;
     }
 
-    // Línea normal (con posible contenido y acordes)
     const elements = parseLineWithChords(raw);
     parsedLines.push({
       type: inTab ? 'tab' : 'line',
@@ -352,7 +309,6 @@ export function parseChordPro(text) {
     });
   }
 
-  // Fallback
   if (parsedLines.length === 0 && text && text.trim() !== '') {
     parsedLines.push({
       type: 'line',
@@ -361,10 +317,7 @@ export function parseChordPro(text) {
     });
   }
 
-  return {
-    metadata,
-    lines: parsedLines,
-  };
+  return { metadata, lines: parsedLines };
 }
 
 const parseChordProLegacy = parseChordPro;
@@ -675,7 +628,7 @@ const alignChords = (container) => {
 
 /* --- js/renderer.js --- */
 
-import { getPlainText } from './parser.js'; // <-- Asegúrate de que esta función esté exportada en parser.js
+
 
 /**
  * Renderiza la canción completa en un contenedor del DOM.
@@ -683,56 +636,45 @@ import { getPlainText } from './parser.js'; // <-- Asegúrate de que esta funci�
  * @param {HTMLElement} container Contenedor donde renderizar.
  */
 const renderSong = (song, container) => {
-  // Limpiar contenedor
   container.innerHTML = '';
 
-  // Renderizar Cabecera
+  // Cabecera
   const header = document.createElement('header');
   header.className = 'song-header mb-4';
-
   const title = document.createElement('h1');
   title.className = 'song-title';
   title.textContent = song.metadata.title || 'Sin título';
   header.appendChild(title);
-
   const artist = document.createElement('h2');
   artist.className = 'song-artist text-muted h5';
   artist.textContent = song.metadata.artist || '';
   header.appendChild(artist);
-
   container.appendChild(header);
 
-  // Renderizar Cuerpo (Letra y Acordes)
+  // Cuerpo
   const body = document.createElement('main');
   body.className = 'song-body';
 
-  // Usamos un bucle for para poder agrupar líneas de tablatura
   let i = 0;
   while (i < song.lines.length) {
     const line = song.lines[i];
 
-    // ---- AGREGADO: manejo de bloques de tablatura ----
+    // ---- Bloque de tablatura ----
     if (line.type === 'tab') {
-      // Recolectar todas las líneas 'tab' consecutivas
       let tabContent = '';
       while (i < song.lines.length && song.lines[i].type === 'tab') {
-        const text = getPlainText(song.lines[i]); // extrae el texto sin acordes
-        tabContent += text + '\n';
+        tabContent += getPlainText(song.lines[i]) + '\n';
         i++;
       }
-      // Eliminar el último salto de línea sobrante
       tabContent = tabContent.trimEnd();
-
-      // Crear un bloque <pre> con la tablatura completa
       const pre = document.createElement('pre');
       pre.className = 'tab-block font-monospace bg-light p-2 rounded border';
       pre.textContent = tabContent;
       body.appendChild(pre);
-      continue; // Ya hemos avanzado i, continuar al siguiente ciclo
+      continue; // Válido dentro del while
     }
-    // ---- FIN DEL AGREGADO ----
 
-    // Manejar líneas vacías (si las hay, aunque no se generan en el parser)
+    // Líneas vacías (fallback)
     if (line.type === 'empty') {
       const brDiv = document.createElement('div');
       brDiv.className = 'song-line empty-line';
@@ -742,7 +684,7 @@ const renderSong = (song, container) => {
       continue;
     }
 
-    // Líneas normales (con o sin acordes)
+    // Líneas normales
     const lineDiv = document.createElement('div');
     lineDiv.className = `song-line ${line.type}-line`;
 
@@ -752,7 +694,6 @@ const renderSong = (song, container) => {
       lineDiv.classList.add('fst-italic', 'text-muted', 'my-2');
     }
 
-    // Elementos de la línea
     line.elements.forEach(el => {
       if (el.type === 'text' || el.type === 'space') {
         const textSpan = document.createElement('span');

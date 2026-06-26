@@ -1,23 +1,12 @@
 // parser.js
 
-// ---------- CONSTANTES Y UTILIDADES PARA ACORDES ----------
-
 const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-const GERMAN_TO_EN = {
-  'H': 'B',
-};
+const GERMAN_TO_EN = { 'H': 'B' };
 
 const FLAT_TO_SHARP = {
-  'Bb': 'A#',
-  'Db': 'C#',
-  'Eb': 'D#',
-  'Gb': 'F#',
-  'Ab': 'G#',
-  'Ebb': 'D',
-  'Abb': 'G',
-  'Bbb': 'A',
-  'B': 'A#',
+  'Bb': 'A#', 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#',
+  'Ebb': 'D', 'Abb': 'G', 'Bbb': 'A', 'B': 'A#'
 };
 
 function normalizeRoot(root, isBass = false) {
@@ -43,7 +32,6 @@ function normalizeRoot(root, isBass = false) {
 export function parseChord(chordStr) {
   if (!chordStr) return null;
   chordStr = chordStr.trim();
-
   let rootPart, bassPart = null;
   const slashIndex = chordStr.indexOf('/');
   if (slashIndex !== -1) {
@@ -53,34 +41,23 @@ export function parseChord(chordStr) {
   } else {
     rootPart = chordStr;
   }
-
   const match = rootPart.match(/^([A-H][#b]?)(.*)$/);
   if (!match) {
     const normalized = normalizeRoot(rootPart, false);
     return { root: normalized, suffix: '', bass: bassPart || null };
   }
-
   let root = match[1];
   const suffix = match[2] || '';
   root = normalizeRoot(root, false);
-
-  return {
-    root,
-    suffix,
-    bass: bassPart || null,
-  };
+  return { root, suffix, bass: bassPart || null };
 }
 
 export function stringifyChord(chordObj) {
   if (!chordObj) return '';
   let result = chordObj.root + (chordObj.suffix || '');
-  if (chordObj.bass) {
-    result += '/' + chordObj.bass;
-  }
+  if (chordObj.bass) result += '/' + chordObj.bass;
   return result;
 }
-
-// ---------- PARSER DE CANCIONES COMPLETAS ----------
 
 const DIRECTIVE_PATTERNS = {
   title: /^\{title\s*:\s*(.+?)\}$/i,
@@ -92,7 +69,6 @@ const DIRECTIVE_PATTERNS = {
   soc: /^\{soc\}$/i,
   eoc: /^\{eoc\}$/i,
   tab: /^\{tab\s*:\s*(.+?)\}$/i,
-  // NUEVAS directivas para tablatura
   sot: /^\{sot\}$/i,
   eot: /^\{eot\}$/i,
   define: /^\{define\s*:\s*(.+?)\}$/i,
@@ -108,22 +84,17 @@ function parseLineWithChords(line) {
   let lastIndex = 0;
   const chordRegex = /\[([^\]]+)\]/g;
   let match;
-
   while ((match = chordRegex.exec(remaining)) !== null) {
     const chordText = match[1].trim();
     const before = remaining.slice(lastIndex, match.index);
-    if (before) {
-      elements.push({ type: 'text', value: before });
-    }
+    if (before) elements.push({ type: 'text', value: before });
     const chordObj = parseChord(chordText);
     const normalizedChord = chordObj ? stringifyChord(chordObj) : chordText;
     elements.push({ type: 'chord', value: normalizedChord });
     lastIndex = match.index + match[0].length;
   }
-
   const after = remaining.slice(lastIndex);
   elements.push({ type: 'text', value: after });
-
   return elements;
 }
 
@@ -139,10 +110,7 @@ function parseDirective(line) {
 }
 
 export function parseChordPro(text) {
-  if (!text || text.trim() === '') {
-    return { metadata: {}, lines: [] };
-  }
-
+  if (!text || text.trim() === '') return { metadata: {}, lines: [] };
   const lines = text.split(/\r?\n/);
   const metadata = {};
   const parsedLines = [];
@@ -153,7 +121,6 @@ export function parseChordPro(text) {
     const raw = lines[i];
     const trimmed = raw.trim();
 
-    // Líneas vacías
     if (trimmed === '') {
       parsedLines.push({
         type: inTab ? 'tab' : 'line',
@@ -165,20 +132,15 @@ export function parseChordPro(text) {
 
     const directive = parseDirective(trimmed);
     if (directive) {
-      // Metadatos
       if (METADATA_DIRECTIVES.includes(directive.name)) {
         let value = directive.value;
         if (directive.name === 'key') {
           const chordObj = parseChord(value);
-          if (chordObj) {
-            value = stringifyChord(chordObj);
-          }
+          if (chordObj) value = stringifyChord(chordObj);
         }
         metadata[directive.name] = value;
         continue;
       }
-
-      // Inicio / Fin de Chorus
       if (directive.name === 'soc') {
         inChorus = true;
         parsedLines.push({ type: 'chorus_start' });
@@ -189,8 +151,6 @@ export function parseChordPro(text) {
         parsedLines.push({ type: 'chorus_end' });
         continue;
       }
-
-      // Inicio / Fin de Tablatura
       if (directive.name === 'sot') {
         inTab = true;
         continue;
@@ -199,8 +159,6 @@ export function parseChordPro(text) {
         inTab = false;
         continue;
       }
-
-      // Otras directivas
       parsedLines.push({
         type: 'directive_line',
         directive: directive.name,
@@ -210,7 +168,6 @@ export function parseChordPro(text) {
       continue;
     }
 
-    // Línea normal (con posible contenido y acordes)
     const elements = parseLineWithChords(raw);
     parsedLines.push({
       type: inTab ? 'tab' : 'line',
@@ -219,7 +176,6 @@ export function parseChordPro(text) {
     });
   }
 
-  // Fallback
   if (parsedLines.length === 0 && text && text.trim() !== '') {
     parsedLines.push({
       type: 'line',
@@ -228,10 +184,7 @@ export function parseChordPro(text) {
     });
   }
 
-  return {
-    metadata,
-    lines: parsedLines,
-  };
+  return { metadata, lines: parsedLines };
 }
 
 export const parseChordProLegacy = parseChordPro;
