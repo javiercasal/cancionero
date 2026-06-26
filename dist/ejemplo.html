@@ -4,57 +4,637 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zamba de mi esperanza - Jorge Cafrune | Cancionero</title>
-  <meta name="description" content="Acordes y letra de Zamba de mi esperanza por Jorge Cafrune">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="Zamba de mi esperanza - Jorge Cafrune">
-  <meta property="og:description" content="Acordes y letra para tocar Zamba de mi esperanza">
-  <meta property="og:type" content="article">
-  <meta property="og:image" content="../assets/logo-cancionero.png">
-  
-  <!-- Bootstrap CSS (Local) -->
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-  
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="../css/custom.css">
   <link rel="stylesheet" href="../css/print.css" media="print">
 </head>
 <body>
-
-  <!-- Controles (ocultos en impresión) -->
+  <!-- CONTROLES -->
   <nav class="controls-bar container-fluid d-flex justify-content-between align-items-center">
     <div class="d-flex gap-2 align-items-center">
-      <a href="../index.html" class="btn btn-outline-secondary btn-sm" aria-label="Volver al índice">&larr; Índice</a>
-      
-      <div class="btn-group shadow-sm" role="group" aria-label="Transposición">
-        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm" title="Bajar medio tono">-</button>
+      <a href="../index.html" class="btn btn-outline-secondary btn-sm">&larr; Índice</a>
+      <div class="btn-group shadow-sm" role="group">
+        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm">-</button>
         <button id="btn-transpose-reset" class="btn btn-outline-primary btn-sm fw-bold">Tono</button>
-        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm" title="Subir medio tono">+</button>
+        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm">+</button>
       </div>
-
       <button id="btn-toggle-chords" class="btn btn-outline-secondary btn-sm">Ocultar acordes</button>
     </div>
-    
     <div>
       <button id="btn-theme-toggle" class="btn btn-sm btn-dark">🌙 Modo Oscuro</button>
-      <button onclick="window.print()" class="btn btn-sm btn-success" title="Imprimir o guardar como PDF">🖨️ Imprimir</button>
+      <button onclick="window.print()" class="btn btn-sm btn-success">🖨️ Imprimir</button>
     </div>
   </nav>
 
-  <!-- Contenedor principal de la canción -->
+  <!-- CANCIÓN -->
   <div class="container" id="song-container">
-    <!-- El contenido se inyectará aquí o será renderizado dinámicamente -->
+    <header class="song-header mb-4"><h1 class="song-title">Zamba de mi esperanza</h1><h2 class="song-artist text-muted h5">Jorge Cafrune</h2></header><main class="song-body"><div class="song-line line-line"><span class="text-segment">Intro</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba de mi espe</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ranza,</span></div><div class="song-line line-line"><span class="text-segment">amanecida como un que</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">rer.</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Sueño, sueño del </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">alma,</span></div><div class="song-line line-line"><span class="text-segment">que a </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">veces muere sin </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">flore</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">cer.</span></div><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba, a ti te </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">canto,</span></div><div class="song-line line-line"><span class="text-segment">porque tu canto derrama a</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">mor.</span></div><div class="song-line line-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Caricia de tu pa</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">ñuelo,</span></div><div class="song-line line-line"><span class="text-segment">que va envol</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">viendo mi co</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ra</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">zón.</span></div><div class="song-line line-line"><span class="text-segment"></span></div><pre class="tab-block font-monospace bg-light p-2 rounded border">e|-------5-7-----7-|-8-----8-2-----2-|-0---------0-----|-----------------|
+B|-----5-----5-----|---5-----3-------|---1---1-----1---|-0-1-1-----------|
+G|---5---------5---|-----5-------2---|-----2---------2-|-0-2-2----2------|
+D|-7-------6-------|-5-------4-------|-3---------------|-----------------|
+A|-----------------|-----------------|-----------------|-2-0-0----0-/8-7-|
+E|-----------------|-----------------|-----------------|-----------------|</pre><div class="song-line line-line"><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Alemán H: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Alemán B: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment">Acorde raro: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Do#m7(b5)/Mi</span></span><span class="text-segment"></span></div><div class="song-line line-line"><span class="text-segment"></span></div></main>
   </div>
 
-  <!-- Datos originales embebidos -->
+  <!-- DATOS -->
   <script type="text/plain" id="original-chordpro">
-{{CHORDPRO}}
+    {title: Zamba de mi esperanza}
+{artist: Jorge Cafrune}
+{key: Am}
+{capo: 0}
+Intro
+[Am] - [E7] - [Am]
+
+[Am]Zamba de mi espe[E7]ranza,
+amanecida como un que[Am]rer.
+[A7]Sueño, sueño del [Dm]alma,
+que a [Am]veces muere sin [E7]flore[Am]cer.
+
+[Am]Zamba, a ti te [E7]canto,
+porque tu canto derrama a[Am]mor.
+[A7]Caricia de tu pa[Dm]ñuelo,
+que va envol[Am]viendo mi co[E7]ra[Am]zón.
+
+{sot}
+e|-------5-7-----7-|-8-----8-2-----2-|-0---------0-----|-----------------|
+B|-----5-----5-----|---5-----3-------|---1---1-----1---|-0-1-1-----------|
+G|---5---------5---|-----5-------2---|-----2---------2-|-0-2-2----2------|
+D|-7-------6-------|-5-------4-------|-3---------------|-----------------|
+A|-----------------|-----------------|-----------------|-2-0-0----0-/8-7-|
+E|-----------------|-----------------|-----------------|-----------------|
+{eot}
+
+{comment: Acordes complejos para prueba de normalización}
+Alemán H: [H] -> [B]
+Alemán B: [B] -> [Bb]
+Acorde raro: [C#m7(b5)/E]
+
   </script>
 
-  <!-- Scripts -->
-  <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Usar type="module" para cargar la lógica local -->
-  <script type="module" src="../js/main.js"></script>
+  <!-- BUNDLE (siempre al final) -->
+  <script>var Cancionero = (() => {
+  // src/js/parser.js
+  var NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  var GERMAN_TO_EN = { "H": "B" };
+  var FLAT_TO_SHARP = {
+    "Bb": "A#",
+    "Db": "C#",
+    "Eb": "D#",
+    "Gb": "F#",
+    "Ab": "G#",
+    "Ebb": "D",
+    "Abb": "G",
+    "Bbb": "A",
+    "B": "A#"
+  };
+  function normalizeRoot(root, isBass = false) {
+    if (!root) return root;
+    if (GERMAN_TO_EN[root]) return GERMAN_TO_EN[root];
+    if (!isBass && FLAT_TO_SHARP[root]) return FLAT_TO_SHARP[root];
+    if (!isBass && root.includes("b")) {
+      const match = root.match(/^([A-G])b(.*)$/);
+      if (match) {
+        const note = match[1];
+        const rest = match[2];
+        const naturalIndex = NOTE_NAMES.indexOf(note);
+        if (naturalIndex !== -1) {
+          const sharpIndex = (naturalIndex - 1 + 12) % 12;
+          const sharpNote = NOTE_NAMES[sharpIndex];
+          return sharpNote + rest;
+        }
+      }
+    }
+    return root;
+  }
+  function parseChord(chordStr) {
+    if (!chordStr) return null;
+    chordStr = chordStr.trim();
+    let rootPart, bassPart = null;
+    const slashIndex = chordStr.indexOf("/");
+    if (slashIndex !== -1) {
+      rootPart = chordStr.substring(0, slashIndex);
+      bassPart = chordStr.substring(slashIndex + 1);
+      bassPart = normalizeRoot(bassPart, true);
+    } else {
+      rootPart = chordStr;
+    }
+    const match = rootPart.match(/^([A-H][#b]?)(.*)$/);
+    if (!match) {
+      const normalized = normalizeRoot(rootPart, false);
+      return { root: normalized, suffix: "", bass: bassPart || null };
+    }
+    let root = match[1];
+    const suffix = match[2] || "";
+    root = normalizeRoot(root, false);
+    return { root, suffix, bass: bassPart || null };
+  }
+  function stringifyChord(chordObj) {
+    if (!chordObj) return "";
+    let result = chordObj.root + (chordObj.suffix || "");
+    if (chordObj.bass) result += "/" + chordObj.bass;
+    return result;
+  }
+  var DIRECTIVE_PATTERNS = {
+    title: /^\{title\s*:\s*(.+?)\}$/i,
+    artist: /^\{artist\s*:\s*(.+?)\}$/i,
+    key: /^\{key\s*:\s*(.+?)\}$/i,
+    capo: /^\{capo\s*:\s*(.+?)\}$/i,
+    comment: /^\{comment\s*:\s*(.+?)\}$/i,
+    chorus: /^\{chorus\s*:\s*(.+?)\}$/i,
+    soc: /^\{soc\}$/i,
+    eoc: /^\{eoc\}$/i,
+    tab: /^\{tab\s*:\s*(.+?)\}$/i,
+    sot: /^\{sot\}$/i,
+    eot: /^\{eot\}$/i,
+    define: /^\{define\s*:\s*(.+?)\}$/i,
+    tempo: /^\{tempo\s*:\s*(.+?)\}$/i,
+    time: /^\{time\s*:\s*(.+?)\}$/i
+  };
+  var METADATA_DIRECTIVES = ["title", "artist", "key", "capo", "tempo", "time"];
+  function parseLineWithChords(line) {
+    const elements = [];
+    let remaining = line;
+    let lastIndex = 0;
+    const chordRegex = /\[([^\]]+)\]/g;
+    let match;
+    while ((match = chordRegex.exec(remaining)) !== null) {
+      const chordText = match[1].trim();
+      const before = remaining.slice(lastIndex, match.index);
+      if (before) elements.push({ type: "text", value: before });
+      const chordObj = parseChord(chordText);
+      const normalizedChord = chordObj ? stringifyChord(chordObj) : chordText;
+      elements.push({ type: "chord", value: normalizedChord });
+      lastIndex = match.index + match[0].length;
+    }
+    const after = remaining.slice(lastIndex);
+    elements.push({ type: "text", value: after });
+    return elements;
+  }
+  function parseDirective(line) {
+    const trimmed = line.trim();
+    for (const [name, pattern] of Object.entries(DIRECTIVE_PATTERNS)) {
+      const match = trimmed.match(pattern);
+      if (match) {
+        return { type: "directive", name, value: match[1] ? match[1].trim() : null };
+      }
+    }
+    return null;
+  }
+  function parseChordPro(text) {
+    if (!text || text.trim() === "") return { metadata: {}, lines: [] };
+    const lines = text.split(/\r?\n/);
+    const metadata = {};
+    const parsedLines = [];
+    let inChorus = false;
+    let inTab = false;
+    for (let i = 0; i < lines.length; i++) {
+      const raw = lines[i];
+      const trimmed = raw.trim();
+      if (trimmed === "") {
+        parsedLines.push({
+          type: inTab ? "tab" : "line",
+          elements: [{ type: "text", value: "" }],
+          isChorus: inChorus
+        });
+        continue;
+      }
+      const directive = parseDirective(trimmed);
+      if (directive) {
+        if (METADATA_DIRECTIVES.includes(directive.name)) {
+          let value = directive.value;
+          if (directive.name === "key") {
+            const chordObj = parseChord(value);
+            if (chordObj) value = stringifyChord(chordObj);
+          }
+          metadata[directive.name] = value;
+          continue;
+        }
+        if (directive.name === "soc") {
+          inChorus = true;
+          parsedLines.push({ type: "chorus_start" });
+          continue;
+        }
+        if (directive.name === "eoc") {
+          inChorus = false;
+          parsedLines.push({ type: "chorus_end" });
+          continue;
+        }
+        if (directive.name === "sot") {
+          inTab = true;
+          continue;
+        }
+        if (directive.name === "eot") {
+          inTab = false;
+          continue;
+        }
+        parsedLines.push({
+          type: "directive_line",
+          directive: directive.name,
+          value: directive.value,
+          raw: trimmed
+        });
+        continue;
+      }
+      const elements = parseLineWithChords(raw);
+      parsedLines.push({
+        type: inTab ? "tab" : "line",
+        elements,
+        isChorus: inChorus
+      });
+    }
+    if (parsedLines.length === 0 && text && text.trim() !== "") {
+      parsedLines.push({
+        type: "line",
+        elements: [{ type: "text", value: "" }],
+        isChorus: false
+      });
+    }
+    return { metadata, lines: parsedLines };
+  }
+  function getPlainText(line) {
+    if (line.type !== "line" && line.type !== "tab") return "";
+    return line.elements.filter((el) => el.type === "text").map((el) => el.value).join("");
+  }
 
+  // src/js/transpose.js
+  var NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  var getNoteIndex = (note) => {
+    return NOTES.indexOf(note);
+  };
+  var transposeNote = (note, semitones) => {
+    if (!note) return note;
+    const index = getNoteIndex(note);
+    if (index === -1) return note;
+    const newIndex = ((index + semitones) % 12 + 12) % 12;
+    return NOTES[newIndex];
+  };
+  var transposeChordString = (chordStr, semitones) => {
+    const parsed = parseChord(chordStr);
+    const newRoot = transposeNote(parsed.root, semitones);
+    const newBass = transposeNote(parsed.bass, semitones);
+    return stringifyChord({
+      root: newRoot,
+      suffix: parsed.suffix,
+      bass: newBass
+    });
+  };
+  var transposeKey = (originalKey, semitones) => {
+    if (!originalKey) return { newKey: "", suggestedCapo: 0 };
+    let root = originalKey;
+    let mode = "";
+    if (originalKey.endsWith("m")) {
+      root = originalKey.slice(0, -1);
+      mode = "m";
+    }
+    const newRoot = transposeNote(root, semitones);
+    const suggestedCapo = (semitones % 12 + 12) % 12;
+    return {
+      newKey: newRoot + mode,
+      suggestedCapo
+    };
+  };
+  var transposeSong = (song, semitones) => {
+    let newKey = song.metadata.key;
+    let newCapo = song.metadata.capo;
+    if (song.metadata.key) {
+      const keyInfo = transposeKey(song.metadata.key, semitones);
+      newKey = keyInfo.newKey;
+      newCapo = keyInfo.suggestedCapo || song.metadata.capo;
+    }
+    const newSong = {
+      metadata: {
+        ...song.metadata,
+        key: newKey,
+        capo: newCapo
+      },
+      lines: song.lines.map((line) => ({
+        type: line.type,
+        elements: line.elements.map((el) => {
+          if (el.type === "chord") {
+            return {
+              type: "chord",
+              value: transposeChordString(el.value, semitones)
+            };
+          }
+          return el;
+        })
+      }))
+    };
+    return newSong;
+  };
+
+  // src/config.js
+  var config_default = {
+    // Cómo se mostrarán las notas: 'latino' (Do, Re, Mi), 'ingles' (C, D, E), 'aleman' (C, D, E, F, G, A, H)
+    notation: "latino",
+    // Preferencia para alteraciones si no está en la armadura original de la tonalidad: 'sharps' (sostenidos), 'flats' (bemoles)
+    accidentalPreference: "sharps",
+    // Tonalidad por defecto si el archivo .cho no tiene directiva {key: ...}
+    defaultKey: "C",
+    // Tamaño base en píxeles para la letra
+    fontSize: 18,
+    // Tema inicial de la interfaz: 'claro' o 'oscuro'
+    theme: "claro",
+    // Límite de semitonos a transponer (evita bucles excesivos, típicamente 11)
+    maxTransposeSteps: 11,
+    // Indica si debe calcularse y mostrarse la sugerencia de Capo al transponer
+    showCapo: true,
+    // Textos y etiquetas (soporte básico para internacionalización futura)
+    i18n: {
+      up: "Subir medio tono",
+      down: "Bajar medio tono",
+      darkMode: "Modo oscuro",
+      showChords: "Mostrar acordes",
+      hideChords: "Ocultar acordes"
+    }
+  };
+
+  // src/js/notation.js
+  var NOTATION_MAP = {
+    // Las claves son las notas en sostenidos (inglés)
+    "C": { latino: "Do", aleman: "C" },
+    "C#": { latino: "Do#", aleman: "C#" },
+    // Se convertirá a bemol si config.accidentalPreference === 'flats'
+    "D": { latino: "Re", aleman: "D" },
+    "D#": { latino: "Re#", aleman: "D#" },
+    "E": { latino: "Mi", aleman: "E" },
+    "F": { latino: "Fa", aleman: "F" },
+    "F#": { latino: "Fa#", aleman: "F#" },
+    "G": { latino: "Sol", aleman: "G" },
+    "G#": { latino: "Sol#", aleman: "G#" },
+    "A": { latino: "La", aleman: "A" },
+    "A#": { latino: "La#", aleman: "A#" },
+    "B": { latino: "Si", aleman: "H" }
+  };
+  var SHARPS_TO_FLATS = {
+    "C#": "Db",
+    "D#": "Eb",
+    "F#": "Gb",
+    "G#": "Ab",
+    "A#": "Bb"
+  };
+  var FLATS_LATINO = {
+    "Db": "Reb",
+    "Eb": "Mib",
+    "Gb": "Solb",
+    "Ab": "Lab",
+    "Bb": "Sib"
+  };
+  var FLATS_ALEMAN = {
+    "Db": "Db",
+    "Eb": "Eb",
+    "Gb": "Gb",
+    "Ab": "Ab",
+    "Bb": "B"
+    // Nota importante en alemán: Bb se escribe B
+  };
+  var formatNote = (note, format, preference) => {
+    if (!note) return "";
+    let isFlat = preference === "flats" && SHARPS_TO_FLATS[note] !== void 0;
+    if (isFlat) {
+      const flatNote = SHARPS_TO_FLATS[note];
+      if (format === "latino") return FLATS_LATINO[flatNote];
+      if (format === "aleman") return FLATS_ALEMAN[flatNote];
+      return flatNote;
+    }
+    if (format === "latino") return NOTATION_MAP[note]?.latino || note;
+    if (format === "aleman") return NOTATION_MAP[note]?.aleman || note;
+    return note;
+  };
+  var formatChord = (chordStr) => {
+    const { notation, accidentalPreference } = config_default;
+    const parsed = parseChord(chordStr);
+    const rootFormat = formatNote(parsed.root, notation, accidentalPreference);
+    const bassFormat = parsed.bass ? formatNote(parsed.bass, notation, accidentalPreference) : null;
+    return `${rootFormat}${parsed.suffix}${bassFormat ? "/" + bassFormat : ""}`;
+  };
+
+  // src/js/renderer.js
+  var renderSong = (song, container) => {
+    container.innerHTML = "";
+    const header = document.createElement("header");
+    header.className = "song-header mb-4";
+    const title = document.createElement("h1");
+    title.className = "song-title";
+    title.textContent = song.metadata.title || "Sin t\xEDtulo";
+    header.appendChild(title);
+    const artist = document.createElement("h2");
+    artist.className = "song-artist text-muted h5";
+    artist.textContent = song.metadata.artist || "";
+    header.appendChild(artist);
+    container.appendChild(header);
+    const body = document.createElement("main");
+    body.className = "song-body";
+    let i = 0;
+    while (i < song.lines.length) {
+      const line = song.lines[i];
+      if (line.type === "directive_line" || line.type === "chorus_start" || line.type === "chorus_end") {
+        i++;
+        continue;
+      }
+      if (line.type === "tab") {
+        let tabContent = "";
+        while (i < song.lines.length && song.lines[i].type === "tab") {
+          tabContent += getPlainText(song.lines[i]) + "\n";
+          i++;
+        }
+        tabContent = tabContent.trimEnd();
+        const pre = document.createElement("pre");
+        pre.className = "tab-block font-monospace bg-light p-2 rounded border";
+        pre.textContent = tabContent;
+        body.appendChild(pre);
+        continue;
+      }
+      if (!line.elements) {
+        line.elements = [{ type: "text", value: "" }];
+      }
+      const lineDiv = document.createElement("div");
+      lineDiv.className = `song-line ${line.type}-line`;
+      if (line.isChorus) {
+        lineDiv.classList.add("ps-3", "border-start", "border-3", "border-primary", "my-1");
+      }
+      if (line.type === "comment") {
+        lineDiv.classList.add("fst-italic", "text-muted", "my-2");
+      }
+      line.elements.forEach((el) => {
+        if (el.type === "text" || el.type === "space") {
+          const textSpan = document.createElement("span");
+          textSpan.className = "text-segment";
+          textSpan.textContent = el.value;
+          lineDiv.appendChild(textSpan);
+        } else if (el.type === "chord") {
+          const wrapper = document.createElement("span");
+          wrapper.className = "chord-wrapper";
+          const chordSpan = document.createElement("span");
+          chordSpan.className = "chord fw-bold text-primary";
+          chordSpan.textContent = formatChord(el.value);
+          wrapper.appendChild(chordSpan);
+          lineDiv.appendChild(wrapper);
+        }
+      });
+      body.appendChild(lineDiv);
+      i++;
+    }
+    container.appendChild(body);
+  };
+
+  // src/js/align.js
+  var measureTextWidth = (textNode, offset) => {
+    if (!document.createRange) return 0;
+    const range = document.createRange();
+    try {
+      range.setStart(textNode, 0);
+      range.setEnd(textNode, offset);
+      const rect = range.getBoundingClientRect();
+      return rect.width;
+    } catch (e) {
+      console.warn("No se pudo medir el texto:", e);
+      return 0;
+    }
+  };
+  var alignChords = (container) => {
+    const lines = container.querySelectorAll(".song-line");
+    lines.forEach((line) => {
+      const chordWrappers = line.querySelectorAll(".chord-wrapper");
+      if (chordWrappers.length === 0) return;
+      let accumulatedWidth = 0;
+      const childNodes = Array.from(line.childNodes);
+      childNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.classList.contains("text-segment")) {
+            const textNode = node.firstChild;
+            if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+              accumulatedWidth += measureTextWidth(textNode, textNode.length);
+            }
+          } else if (node.classList.contains("chord-wrapper")) {
+            const chordSpan = node.querySelector(".chord");
+            if (chordSpan) {
+              chordSpan.style.left = `${accumulatedWidth}px`;
+            }
+          }
+        }
+      });
+    });
+  };
+
+  // src/js/ui.js
+  var initUI = (onTranspose, onToggleChords) => {
+    const themeToggleBtn = document.getElementById("btn-theme-toggle");
+    const applyTheme = (theme) => {
+      document.documentElement.setAttribute("data-bs-theme", theme);
+      if (themeToggleBtn) {
+        themeToggleBtn.textContent = theme === "dark" ? "\u2600\uFE0F Modo Claro" : "\u{1F319} Modo Oscuro";
+      }
+    };
+    let currentTheme = config_default.theme === "oscuro" ? "dark" : "light";
+    applyTheme(currentTheme);
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener("click", () => {
+        currentTheme = currentTheme === "light" ? "dark" : "light";
+        applyTheme(currentTheme);
+      });
+    }
+    const btnUp = document.getElementById("btn-transpose-up");
+    const btnDown = document.getElementById("btn-transpose-down");
+    const btnReset = document.getElementById("btn-transpose-reset");
+    if (btnUp) btnUp.addEventListener("click", () => onTranspose(1));
+    if (btnDown) btnDown.addEventListener("click", () => onTranspose(-1));
+    if (btnReset) btnReset.addEventListener("click", () => onTranspose(0, true));
+    const btnToggleChords = document.getElementById("btn-toggle-chords");
+    let chordsVisible = true;
+    if (btnToggleChords) {
+      btnToggleChords.addEventListener("click", () => {
+        chordsVisible = !chordsVisible;
+        if (chordsVisible) {
+          document.body.classList.remove("hide-chords");
+          btnToggleChords.textContent = config_default.i18n.hideChords || "Ocultar acordes";
+        } else {
+          document.body.classList.add("hide-chords");
+          btnToggleChords.textContent = config_default.i18n.showChords || "Mostrar acordes";
+        }
+        onToggleChords(chordsVisible);
+      });
+    }
+  };
+
+  // src/js/main.js
+  var state = {
+    originalSong: null,
+    currentSong: null,
+    transposeSteps: 0
+  };
+  window.cancionero = {
+    hooks: {
+      onBeforeRender: [],
+      onAfterRender: [],
+      onTranspose: []
+    },
+    registerHook(hookName, callback) {
+      if (this.hooks[hookName]) {
+        this.hooks[hookName].push(callback);
+      }
+    },
+    getSong() {
+      return state.currentSong;
+    },
+    transpose(steps, isReset = false) {
+      if (!state.originalSong) return;
+      if (isReset) {
+        state.transposeSteps = 0;
+      } else {
+        state.transposeSteps += steps;
+      }
+      state.currentSong = transposeSong(state.originalSong, state.transposeSteps);
+      this.hooks.onTranspose.forEach((cb) => cb(state.currentSong));
+      this.render();
+    },
+    render() {
+      if (!state.currentSong) return;
+      const container = document.getElementById("song-container");
+      if (!container) return;
+      let songToRender = state.currentSong;
+      this.hooks.onBeforeRender.forEach((cb) => {
+        songToRender = cb(songToRender) || songToRender;
+      });
+      renderSong(songToRender, container);
+      requestAnimationFrame(() => {
+        alignChords(container);
+        this.hooks.onAfterRender.forEach((cb) => cb(container));
+      });
+    },
+    loadFromText(text) {
+      state.originalSong = parseChordPro(text);
+      state.currentSong = state.originalSong;
+      state.transposeSteps = 0;
+      this.render();
+    }
+  };
+  var init = () => {
+    initUI(
+      (steps, isReset) => window.cancionero.transpose(steps, isReset),
+      (isVisible) => {
+        if (isVisible) {
+          requestAnimationFrame(() => {
+            alignChords(document.getElementById("song-container"));
+          });
+        }
+      }
+    );
+    const scriptTag = document.getElementById("original-chordpro");
+    if (scriptTag) {
+      let content = scriptTag.textContent;
+      window.cancionero.loadFromText(content);
+    }
+    window.addEventListener("resize", () => {
+      alignChords(document.getElementById("song-container"));
+    });
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
 </body>
 </html>

@@ -19,7 +19,7 @@ const CSS_SRC = path.join(SRC_DIR, 'css');
 const CSS_DIST = path.join(DIST_DIR, 'css');
 const TEMPLATE_PATH = path.join(SRC_DIR, 'template.html');
 
-// --- Configurar JSDOM para que `document` esté disponible globalmente ---
+// Configurar JSDOM para Node
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
 global.document = dom.window.document;
 global.window = dom.window;
@@ -39,34 +39,33 @@ async function copyAssets() {
 async function build() {
   console.log('🚀 Iniciando generación del cancionero...');
 
-  // 1. Preparar directorios de salida
   await fs.mkdir(DIST_DIR, { recursive: true });
   await fs.mkdir(ASSETS_DIST, { recursive: true });
   await fs.mkdir(CSS_DIST, { recursive: true });
 
-  // 2. Copiar assets y CSS
   await copyAssets();
 
-  // 3. Empaquetar JavaScript con esbuild (UNA SOLA VEZ)
-  console.log('📦 Empaquetando JavaScript con esbuild...');
+  // Empaquetar JavaScript como IIFE (sin export)
+  console.log('📦 Empaquetando JavaScript con esbuild (IIFE)...');
   const bundle = await esbuild.build({
     entryPoints: [path.join(SRC_DIR, 'js', 'main.js')],
     bundle: true,
-    format: 'iife',
-    globalName: 'Cancionero',
+    format: 'iife',          // <-- FORZAR IIFE
     platform: 'browser',
     target: 'es2020',
     write: false,
     minify: false,
     sourcemap: false,
+    globalName: 'Cancionero', // Opcional
   });
+
   const bundledScript = bundle.outputFiles[0].text;
 
-  // 4. Leer la plantilla HTML
+  // Leer plantilla
   console.log('📄 Cargando plantilla HTML...');
   let template = await fs.readFile(TEMPLATE_PATH, 'utf-8');
 
-  // 5. Obtener lista de archivos .cho desde src/canciones/
+  // Buscar archivos .cho
   console.log(`📂 Buscando archivos .cho en ${CANCIONES_DIR}...`);
   let choFiles = [];
   try {
@@ -86,7 +85,6 @@ async function build() {
 
   console.log(`✅ Encontrados ${choFiles.length} archivo(s) .cho.`);
 
-  // 6. Procesar cada archivo .cho
   for (const choFile of choFiles) {
     const choPath = path.join(CANCIONES_DIR, choFile);
     console.log(`🎵 Procesando: ${choFile}`);
@@ -99,26 +97,21 @@ async function build() {
       continue;
     }
 
-    // Parsear y renderizar
     const song = parseChordPro(chordProContent);
-    // Crear un contenedor usando el documento global (gracias a JSDOM)
     const container = document.createElement('div');
     container.id = 'song-container';
     renderSong(song, container);
 
-    // Extraer metadatos
     const title = song.metadata.title || path.basename(choFile, '.cho');
     const artist = song.metadata.artist || 'Desconocido';
 
-    // Generar HTML final
     let html = template
-      .replace(/\{\{TITLE\}\}/g, title)
-      .replace(/\{\{ARTIST\}\}/g, artist)
-      .replace('<!-- {{RENDERED_SONG}} -->', container.innerHTML)
-      .replace('<!-- {{CHORDPRO_DATA}} -->', chordProContent)
-      .replace('<!-- {{BUNDLED_JS}} -->', `<script>${bundledScript}</script>`);
+      .replace('{{TITLE}}', title)
+      .replace('{{ARTIST}}', artist)
+      .replace('{{RENDERED_SONG}}', container.innerHTML)
+      .replace('{{CHORDPRO_DATA}}', chordProContent)
+      .replace('{{BUNDLED_JS}}', `<script>${bundledScript}</script>`);
 
-    // Guardar archivo
     const outputFileName = choFile.replace(/\.cho$/, '.html');
     const outputPath = path.join(DIST_DIR, outputFileName);
     await fs.writeFile(outputPath, html);
@@ -128,7 +121,6 @@ async function build() {
   console.log('🎉 Generación completada.');
 }
 
-// Ejecutar el build
 build().catch(err => {
   console.error('❌ Error durante el build:', err);
   process.exit(1);
