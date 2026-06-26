@@ -1,4 +1,4 @@
-// source/js/__tests__/parser.test.js
+// src/js/__tests__/parser.test.js
 
 import { parseChordPro, getPlainText, getAllDirectives } from '../parser.js';
 

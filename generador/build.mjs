@@ -74,6 +74,18 @@ async function build() {
       const content = await fs.readFile(filePath, 'utf8');
       
       const ast = parseChordPro(content);
+
+      if (!ast.lines || !Array.isArray(ast.lines)) {
+          ast.lines = [];
+      }
+
+      ast.lines = ast.lines.map(line => {
+          if (!line.elements || !Array.isArray(line.elements)) {
+              line.elements = [];
+          }
+          return line;
+      });
+
       const { title, artist } = ast.metadata;
 
       // Pre-renderizar DOM

@@ -44,9 +44,6 @@ export const alignChords = (container) => {
 
     let accumulatedWidth = 0;
 
-    // Para una alineación perfecta, medimos desde el principio de la línea hasta la posición de cada acorde.
-    // Como las líneas están generadas secuencialmente: <span class="text-segment">texto</span><span class="chord-wrapper">...</span>
-    
     // Iteramos por los nodos hijos de la línea
     const childNodes = Array.from(line.childNodes);
     
@@ -59,8 +56,13 @@ export const alignChords = (container) => {
             accumulatedWidth += measureTextWidth(textNode, textNode.length);
           }
         } else if (node.classList.contains('chord-wrapper')) {
-          // Asignamos la posición acumulada al contenedor absoluto
-          node.style.left = `${accumulatedWidth}px`;
+          // Buscamos el elemento .chord dentro del wrapper y le asignamos la posición
+          const chordSpan = node.querySelector('.chord');
+          if (chordSpan) {
+            chordSpan.style.left = `${accumulatedWidth}px`;
+          }
+          // Opcional: también podemos asignar al wrapper para compatibilidad con otros estilos
+          // node.style.left = `${accumulatedWidth}px`;
         }
       }
     });
