@@ -1,4 +1,6 @@
-import { parseChordPro, getPlainText, getAllDirectives } from '../src/js/parser.js';
+// src/js/__tests__/parser.test.js
+
+import { parseChordPro, getPlainText, getAllDirectives } from '../parser.js';
 
 describe('ChordPro Parser', () => {
   describe('Metadatos', () => {

@@ -1,205 +1,239 @@
-/**
- * Analizador Sintáctico (Parser) de ChordPro.
- * Convierte el texto fuente ChordPro en un Árbol de Sintaxis Abstracta (AST) inmutable.
- * Normaliza la notación alemana (H->B, B->Bb) y convierte todas las notas a su versión con sostenido (#).
- */
+// source/js/parser.js
 
-// Mapeo de normalización inicial (para notas base antes de sufijos)
-// Soporta la traducción de notación alemana y la conversión a sostenidos estándar.
-const normalizeNote = (noteStr) => {
-  if (!noteStr) return '';
-  // Convertimos a mayúscula para simplificar, manteniendo las alteraciones
-  let n = noteStr.charAt(0).toUpperCase() + noteStr.slice(1);
-  
-  // Normalización alemana
-  if (n === 'H') n = 'B';
-  else if (n === 'B') n = 'Bb';
-  
-  // Tabla de equivalencias a sostenidos
-  const enharmonics = {
-    'Db': 'C#',
-    'Eb': 'D#',
-    'Gb': 'F#',
-    'Ab': 'G#',
-    'Bb': 'A#'
-  };
+// ---------- CONSTANTES Y UTILIDADES PARA ACORDES ----------
 
-  return enharmonics[n] || n;
+const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+// Mapeo de notación alemana a inglesa (solo para H)
+const GERMAN_TO_EN = {
+  'H': 'B',    // Si natural
+};
+
+// Bemoles a sostenidos (solo para raíz, no para bajo)
+const FLAT_TO_SHARP = {
+  'Bb': 'A#',
+  'Db': 'C#',
+  'Eb': 'D#',
+  'Gb': 'F#',
+  'Ab': 'G#',
+  'Ebb': 'D',
+  'Abb': 'G',
+  'Bbb': 'A',
+  'B': 'A#',   // B (alemán) es Si bemol → se convierte a A# en notación de sostenidos
 };
 
 /**
- * Parsea un acorde en formato string ("G#m7/B") a sus componentes.
- * @param {string} chordStr El texto del acorde.
- * @returns {object} { root, suffix, bass } donde root y bass están normalizados a sostenidos.
+ * Normaliza una nota (raíz) a su equivalente en sostenidos.
+ * isBass=true evita convertir B a A# (para bajos).
  */
-export const parseChord = (chordStr) => {
-  // Regex para capturar: Raíz (A-G, opcional H, con opcional # o b), sufijo (resto antes del /), opcional /Bajo
-  const chordRegex = /^([A-H][#b]?)(.*?)(?:\/([A-H][#b]?))?$/;
-  const match = chordStr.match(chordRegex);
-  
+function normalizeRoot(root, isBass = false) {
+  if (!root) return root;
+  // Si es alemán H -> B
+  if (GERMAN_TO_EN[root]) return GERMAN_TO_EN[root];
+  // Si no es bajo y está en el mapa de bemoles, lo convertimos
+  if (!isBass && FLAT_TO_SHARP[root]) return FLAT_TO_SHARP[root];
+  // Manejar bemoles no mapeados (ej: "Cb")
+  if (!isBass && root.includes('b')) {
+    const match = root.match(/^([A-G])b(.*)$/);
+    if (match) {
+      const note = match[1];
+      const rest = match[2];
+      const naturalIndex = NOTE_NAMES.indexOf(note);
+      if (naturalIndex !== -1) {
+        const sharpIndex = (naturalIndex - 1 + 12) % 12;
+        const sharpNote = NOTE_NAMES[sharpIndex];
+        return sharpNote + rest;
+      }
+    }
+  }
+  return root;
+}
+
+/**
+ * Extrae raíz, sufijo y bajo de un string de acorde.
+ */
+export function parseChord(chordStr) {
+  if (!chordStr) return null;
+  chordStr = chordStr.trim();
+
+  let rootPart, bassPart = null;
+  const slashIndex = chordStr.indexOf('/');
+  if (slashIndex !== -1) {
+    rootPart = chordStr.substring(0, slashIndex);
+    bassPart = chordStr.substring(slashIndex + 1);
+    // El bajo NO se normaliza a sostenido (se mantiene como está, solo se convierte H->B si es alemán)
+    bassPart = normalizeRoot(bassPart, true);
+  } else {
+    rootPart = chordStr;
+  }
+
+  // Permitir notas A-G y H (alemán) con # o b opcional
+  const match = rootPart.match(/^([A-H][#b]?)(.*)$/);
   if (!match) {
-    // Fallback por si hay un formato de acorde muy inusual, devolvemos como root
-    return { root: chordStr, suffix: '', bass: null };
+    const normalized = normalizeRoot(rootPart, false);
+    return { root: normalized, suffix: '', bass: bassPart || null };
   }
 
-  const root = normalizeNote(match[1]);
+  let root = match[1];
   const suffix = match[2] || '';
-  const bass = match[3] ? normalizeNote(match[3]) : null;
+  root = normalizeRoot(root, false);
 
-  return { root, suffix, bass };
-};
-
-/**
- * Reconstruye un acorde desde su objeto parseado.
- * @param {object} chordObj { root, suffix, bass }
- * @returns {string} El acorde en texto.
- */
-export const stringifyChord = ({ root, suffix, bass }) => {
-  return `${root}${suffix}${bass ? '/' + bass : ''}`;
-};
-
-/**
- * Normaliza una clave ({key: ...})
- */
-const normalizeKey = (keyStr) => {
-  let root = keyStr;
-  let mode = '';
-  if (keyStr.endsWith('m')) {
-    root = keyStr.slice(0, -1);
-    mode = 'm';
-  }
-  return normalizeNote(root) + mode;
-};
-
-/**
- * Convierte un texto ChordPro a un objeto Song (AST).
- * @param {string} text Contenido del archivo .cho
- * @returns {object} AST Song
- */
-export const parseChordPro = (text) => {
-  const lines = text.split(/\r?\n/);
-  
-  const song = {
-    metadata: {
-      title: 'Canción sin título',
-      artist: 'Artista desconocido',
-      key: 'C'
-    },
-    lines: []
+  return {
+    root,
+    suffix,
+    bass: bassPart || null,
   };
+}
 
+export function stringifyChord(chordObj) {
+  if (!chordObj) return '';
+  let result = chordObj.root + (chordObj.suffix || '');
+  if (chordObj.bass) {
+    result += '/' + chordObj.bass;
+  }
+  return result;
+}
+
+// ---------- PARSER DE CANCIONES COMPLETAS (CHORDPRO) ----------
+
+const DIRECTIVE_PATTERNS = {
+  title: /^\{title\s*:\s*(.+?)\}$/i,
+  artist: /^\{artist\s*:\s*(.+?)\}$/i,
+  key: /^\{key\s*:\s*(.+?)\}$/i,
+  capo: /^\{capo\s*:\s*(.+?)\}$/i,
+  comment: /^\{comment\s*:\s*(.+?)\}$/i,
+  chorus: /^\{chorus\s*:\s*(.+?)\}$/i,
+  soc: /^\{soc\}$/i,
+  eoc: /^\{eoc\}$/i,
+  tab: /^\{tab\s*:\s*(.+?)\}$/i,
+  define: /^\{define\s*:\s*(.+?)\}$/i,
+  tempo: /^\{tempo\s*:\s*(.+?)\}$/i,
+  time: /^\{time\s*:\s*(.+?)\}$/i,
+};
+
+const METADATA_DIRECTIVES = ['title', 'artist', 'key', 'capo', 'tempo', 'time'];
+
+function parseLineWithChords(line) {
+  const elements = [];
+  let remaining = line;
+  let lastIndex = 0;
+  const chordRegex = /\[([^\]]+)\]/g;
+  let match;
+
+  while ((match = chordRegex.exec(remaining)) !== null) {
+    const chordText = match[1].trim();
+    const before = remaining.slice(lastIndex, match.index);
+    if (before) {
+      elements.push({ type: 'text', value: before });
+    }
+    const chordObj = parseChord(chordText);
+    const normalizedChord = chordObj ? stringifyChord(chordObj) : chordText;
+    elements.push({ type: 'chord', value: normalizedChord });
+    lastIndex = match.index + match[0].length;
+  }
+
+  const after = remaining.slice(lastIndex);
+  elements.push({ type: 'text', value: after });
+
+  return elements;
+}
+
+function parseDirective(line) {
+  const trimmed = line.trim();
+  for (const [name, pattern] of Object.entries(DIRECTIVE_PATTERNS)) {
+    const match = trimmed.match(pattern);
+    if (match) {
+      return { type: 'directive', name, value: match[1] ? match[1].trim() : null };
+    }
+  }
+  return null;
+}
+
+export function parseChordPro(text) {
+  // Si el texto está completamente vacío, devolvemos AST vacío
+  if (!text || text.trim() === '') {
+    return { metadata: {}, lines: [] };
+  }
+
+  const lines = text.split(/\r?\n/);
+  const metadata = {};
+  const parsedLines = [];
   let inChorus = false;
 
   for (let i = 0; i < lines.length; i++) {
-    const rawLine = lines[i];
-    const trimmedLine = rawLine.trim();
+    const raw = lines[i];
+    const trimmed = raw.trim();
 
-    // Líneas vacías
-    if (trimmedLine === '') {
-      song.lines.push({
-        type: 'empty',
-        elements: []
+    // Línea vacía → la conservamos como línea de texto vacío (importante para índices)
+    if (trimmed === '') {
+      parsedLines.push({
+        type: 'line',
+        elements: [{ type: 'text', value: '' }],
+        isChorus: inChorus,
       });
       continue;
     }
 
-    // Directivas {directiva: valor} o {directiva}
-    if (trimmedLine.startsWith('{') && trimmedLine.endsWith('}')) {
-      const directiveContent = trimmedLine.slice(1, -1).trim();
-      const colonIndex = directiveContent.indexOf(':');
-      
-      let name, value;
-      if (colonIndex !== -1) {
-        name = directiveContent.slice(0, colonIndex).trim().toLowerCase();
-        value = directiveContent.slice(colonIndex + 1).trim();
-      } else {
-        name = directiveContent.toLowerCase();
-        value = '';
+    const directive = parseDirective(trimmed);
+    if (directive) {
+      if (METADATA_DIRECTIVES.includes(directive.name)) {
+        let value = directive.value;
+        if (directive.name === 'key') {
+          const chordObj = parseChord(value);
+          if (chordObj) {
+            value = stringifyChord(chordObj);
+          }
+        }
+        metadata[directive.name] = value;
+        continue; // no se añade a lines
       }
-
-      // Procesar metadatos
-      if (name === 'title') {
-        song.metadata.title = value;
-      } else if (name === 'artist') {
-        song.metadata.artist = value;
-      } else if (name === 'key') {
-        song.metadata.key = normalizeKey(value);
-      } else if (name === 'capo') {
-        song.metadata.capo = parseInt(value, 10);
-      } else if (name === 'comment' || name === 'c') {
-        song.lines.push({
-          type: 'comment',
-          elements: [{ type: 'text', value }]
-        });
-      } else if (name === 'chorus' || name === 'soc') {
+      if (directive.name === 'soc') {
         inChorus = true;
-      } else if (name === 'eoc') {
+        parsedLines.push({ type: 'chorus_start' });
+        continue;
+      }
+      if (directive.name === 'eoc') {
         inChorus = false;
-      } else if (name === 'tab' || name === 't') { // Alternativa para tab
-        song.lines.push({
-          type: 'tab',
-          elements: [{ type: 'text', value }]
-        });
+        parsedLines.push({ type: 'chorus_end' });
+        continue;
       }
-      
-      continue; // No añadir como línea de letra
+      parsedLines.push({
+        type: 'directive_line',
+        directive: directive.name,
+        value: directive.value,
+        raw: trimmed,
+      });
+      continue;
     }
 
-    // Procesa líneas con acordes o texto normal
-    const elements = [];
-    
-    // Capturamos la tablatura usando regex o asumiendo que si inChorus no afecta a la captura de espacios iniciales.
-    let currentIndex = 0;
-    
-    // Capturar espacios iniciales
-    const leadingSpacesMatch = rawLine.match(/^(\s+)/);
-    if (leadingSpacesMatch) {
-      elements.push({ type: 'space', value: leadingSpacesMatch[1] });
-      currentIndex = leadingSpacesMatch[1].length;
-    }
-
-    let currentText = '';
-    
-    while (currentIndex < rawLine.length) {
-      const char = rawLine[currentIndex];
-
-      if (char === '[') {
-        // Encontramos un acorde. Guardar texto previo si lo hay.
-        if (currentText) {
-          elements.push({ type: 'text', value: currentText });
-          currentText = '';
-        }
-
-        const endBracket = rawLine.indexOf(']', currentIndex);
-        if (endBracket !== -1) {
-          const chordRaw = rawLine.substring(currentIndex + 1, endBracket);
-          // Parseamos y normalizamos el acorde, luego lo guardamos como string en el AST
-          const parsedChord = parseChord(chordRaw);
-          elements.push({ 
-            type: 'chord', 
-            value: stringifyChord(parsedChord) 
-          });
-          currentIndex = endBracket + 1;
-        } else {
-          // Si no hay cierre, tratamos el corchete como texto normal
-          currentText += '[';
-          currentIndex++;
-        }
-      } else {
-        currentText += char;
-        currentIndex++;
-      }
-    }
-
-    if (currentText) {
-      elements.push({ type: 'text', value: currentText });
-    }
-
-    song.lines.push({
-      type: inChorus ? 'chorus' : 'verse',
-      elements
+    // Línea normal con posibles acordes
+    const elements = parseLineWithChords(raw);
+    parsedLines.push({
+      type: 'line',
+      elements,
+      isChorus: inChorus,
     });
   }
 
-  return song;
-};
+  return {
+    metadata,
+    lines: parsedLines,
+  };
+}
+
+// Alias para compatibilidad
+export const parseChordProLegacy = parseChordPro;
+
+export function getPlainText(line) {
+  if (line.type !== 'line') return '';
+  return line.elements
+    .filter(el => el.type === 'text')
+    .map(el => el.value)
+    .join('');
+}
+
+export function getAllDirectives(ast) {
+  return ast.lines
+    .filter(line => line.type === 'directive_line')
+    .map(line => ({ name: line.directive, value: line.value }));
+}
