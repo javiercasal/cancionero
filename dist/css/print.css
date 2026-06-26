@@ -1,0 +1,62 @@
+/* Estilos específicos para impresión */
+
+@media print {
+  /* Ocultar elementos de control de interfaz */
+  .controls-bar,
+  .navbar,
+  .btn,
+  .dropdown,
+  #controls-container,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Anular fondos oscuros y colores de Bootstrap que puedan gastar tinta */
+  body, html {
+    background-color: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+  }
+
+  .bg-primary, .bg-secondary, .bg-success, .bg-danger, .bg-warning, .bg-info, .bg-light, .bg-dark,
+  [class*="bg-"] {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Asegurar que el texto sea negro */
+  .text-primary, .text-secondary, .text-success, .text-danger, .text-warning, .text-info, .text-light, .text-dark, .text-muted,
+  [class*="text-"] {
+    color: black !important;
+  }
+
+  /* Estilos específicos de la canción */
+  .song-title {
+    font-size: 24pt !important;
+    font-weight: bold;
+    margin-bottom: 0.5cm;
+  }
+
+  .song-artist {
+    font-size: 14pt !important;
+    margin-bottom: 1cm;
+  }
+
+  /* Evitar saltos de página en medio de un bloque */
+  .song-line {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Forzar márgenes */
+  @page {
+    margin: 1.5cm;
+  }
+
+  /* Los acordes se imprimen en negro o gris oscuro para diferenciarlos */
+  .chord {
+    font-weight: bold;
+    color: #333 !important;
+  }
+}

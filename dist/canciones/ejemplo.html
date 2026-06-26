@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zamba de mi esperanza - Jorge Cafrune | Cancionero</title>
+  <meta name="description" content="Acordes y letra de Zamba de mi esperanza por Jorge Cafrune">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Zamba de mi esperanza - Jorge Cafrune">
+  <meta property="og:description" content="Acordes y letra para tocar Zamba de mi esperanza">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/logo-cancionero.png">
+  
+  <!-- Bootstrap CSS (Local) -->
+  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../css/custom.css">
+  <link rel="stylesheet" href="../css/print.css" media="print">
+</head>
+<body>
+
+  <!-- Controles (ocultos en impresión) -->
+  <nav class="controls-bar container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex gap-2 align-items-center">
+      <a href="../index.html" class="btn btn-outline-secondary btn-sm" aria-label="Volver al índice">&larr; Índice</a>
+      
+      <div class="btn-group shadow-sm" role="group" aria-label="Transposición">
+        <button id="btn-transpose-down" class="btn btn-outline-primary btn-sm" title="Bajar medio tono">-</button>
+        <button id="btn-transpose-reset" class="btn btn-outline-primary btn-sm fw-bold">Tono</button>
+        <button id="btn-transpose-up" class="btn btn-outline-primary btn-sm" title="Subir medio tono">+</button>
+      </div>
+
+      <button id="btn-toggle-chords" class="btn btn-outline-secondary btn-sm">Ocultar acordes</button>
+    </div>
+    
+    <div>
+      <button id="btn-theme-toggle" class="btn btn-sm btn-dark">🌙 Modo Oscuro</button>
+      <button onclick="window.print()" class="btn btn-sm btn-success" title="Imprimir o guardar como PDF">🖨️ Imprimir</button>
+    </div>
+  </nav>
+
+  <!-- Contenedor principal de la canción -->
+  <div class="container" id="song-container">
+    <header class="song-header mb-4"><h1 class="song-title">Zamba de mi esperanza</h1><h2 class="song-artist text-muted h5">Jorge Cafrune</h2></header><main class="song-body"><div class="song-line verse-line"><span class="text-segment">Intro</span></div><div class="song-line verse-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment"> - </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span></div><div class="song-line empty-line" style="height: 1.5em;"></div><div class="song-line verse-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba de mi espe</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ranza,</span></div><div class="song-line verse-line"><span class="text-segment">amanecida como un que</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">rer.</span></div><div class="song-line verse-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Sueño, sueño del </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">alma,</span></div><div class="song-line verse-line"><span class="text-segment">que a </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">veces muere sin </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">flore</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">cer.</span></div><div class="song-line empty-line" style="height: 1.5em;"></div><div class="song-line verse-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">Zamba, a ti te </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">canto,</span></div><div class="song-line verse-line"><span class="text-segment">porque tu canto derrama a</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">mor.</span></div><div class="song-line verse-line"><span class="chord-wrapper"><span class="chord fw-bold text-primary">La7</span></span><span class="text-segment">Caricia de tu pa</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Rem</span></span><span class="text-segment">ñuelo,</span></div><div class="song-line verse-line"><span class="text-segment">que va envol</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">viendo mi co</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Mi7</span></span><span class="text-segment">ra</span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Lam</span></span><span class="text-segment">zón.</span></div><div class="song-line empty-line" style="height: 1.5em;"></div><div class="song-line tab-line font-monospace bg-light p-2 rounded"><span class="text-segment">Tablatura de ejemplo</span></div><div class="song-line verse-line"><span class="text-segment">e|---0---0---0---|</span></div><div class="song-line verse-line"><span class="text-segment">B|---1---1---1---|</span></div><div class="song-line verse-line"><span class="text-segment">G|---2---2---2---|</span></div><div class="song-line verse-line"><span class="text-segment">D|---------------|</span></div><div class="song-line verse-line"><span class="text-segment">A|-0-------------|</span></div><div class="song-line verse-line"><span class="text-segment">E|-----0---0-----|</span></div><div class="song-line empty-line" style="height: 1.5em;"></div><div class="song-line comment-line fst-italic text-muted my-2"><span class="text-segment">Acordes complejos para prueba de normalización</span></div><div class="song-line verse-line"><span class="text-segment">Alemán H: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span></div><div class="song-line verse-line"><span class="text-segment">Alemán B: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span><span class="text-segment"> -&gt; </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">La#</span></span></div><div class="song-line verse-line"><span class="text-segment">Acorde raro: </span><span class="chord-wrapper"><span class="chord fw-bold text-primary">Do#m7(b5)/Mi</span></span></div><div class="song-line empty-line" style="height: 1.5em;"></div></main>
+  </div>
+
+  <!-- Datos originales embebidos -->
+  <script type="text/plain" id="original-chordpro">
+{title: Zamba de mi esperanza}
+{artist: Jorge Cafrune}
+{key: Am}
+{capo: 0}
+Intro
+[Am] - [E7] - [Am]
+
+[Am]Zamba de mi espe[E7]ranza,
+amanecida como un que[Am]rer.
+[A7]Sueño, sueño del [Dm]alma,
+que a [Am]veces muere sin [E7]flore[Am]cer.
+
+[Am]Zamba, a ti te [E7]canto,
+porque tu canto derrama a[Am]mor.
+[A7]Caricia de tu pa[Dm]ñuelo,
+que va envol[Am]viendo mi co[E7]ra[Am]zón.
+
+{t: Tablatura de ejemplo}
+e|---0---0---0---|
+B|---1---1---1---|
+G|---2---2---2---|
+D|---------------|
+A|-0-------------|
+E|-----0---0-----|
+
+{comment: Acordes complejos para prueba de normalización}
+Alemán H: [H] -> [B]
+Alemán B: [B] -> [Bb]
+Acorde raro: [C#m7(b5)/E]
+
+  </script>
+
+  <!-- Scripts -->
+  <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Usar type="module" para cargar la lógica local -->
+  <script>
+(() => {
+
+/* --- config.js --- */
+/**
+ * Configuración global del Cancionero.
+ * Todas las configuraciones personalizables se encuentran aquí.
+ */
+const config = {
+  // Cómo se mostrarán las notas: 'latino' (Do, Re, Mi), 'ingles' (C, D, E), 'aleman' (C, D, E, F, G, A, H)
+  notation: 'latino',   
+  
+  // Preferencia para alteraciones si no está en la armadura original de la tonalidad: 'sharps' (sostenidos), 'flats' (bemoles)
+  accidentalPreference: 'sharps', 
+  
+  // Tonalidad por defecto si el archivo .cho no tiene directiva {key: ...}
+  defaultKey: 'C',      
+  
+  // Tamaño base en píxeles para la letra
+  fontSize: 18,         
+  
+  // Tema inicial de la interfaz: 'claro' o 'oscuro'
+  theme: 'claro',       
+  
+  // Límite de semitonos a transponer (evita bucles excesivos, típicamente 11)
+  maxTransposeSteps: 11, 
+  
+  // Indica si debe calcularse y mostrarse la sugerencia de Capo al transponer
+  showCapo: true,       
+  
+  // Textos y etiquetas (soporte básico para internacionalización futura)
+  i18n: {               
+    up: 'Subir medio tono',
+    down: 'Bajar medio tono',
+    darkMode: 'Modo oscuro',
+    showChords: 'Mostrar acordes',
+    hideChords: 'Ocultar acordes'
+  }
+};
+
+
+/* --- js/parser.js --- */
+/**
+ * Analizador Sintáctico (Parser) de ChordPro.
+ * Convierte el texto fuente ChordPro en un Árbol de Sintaxis Abstracta (AST) inmutable.
+ * Normaliza la notación alemana (H->B, B->Bb) y convierte todas las notas a su versión con sostenido (#).
+ */
+
+// Mapeo de normalización inicial (para notas base antes de sufijos)
+// Soporta la traducción de notación alemana y la conversión a sostenidos estándar.
+const normalizeNote = (noteStr) => {
+  if (!noteStr) return '';
+  // Convertimos a mayúscula para simplificar, manteniendo las alteraciones
+  let n = noteStr.charAt(0).toUpperCase() + noteStr.slice(1);
+  
+  // Normalización alemana
+  if (n === 'H') n = 'B';
+  else if (n === 'B') n = 'Bb';
+  
+  // Tabla de equivalencias a sostenidos
+  const enharmonics = {
+    'Db': 'C#',
+    'Eb': 'D#',
+    'Gb': 'F#',
+    'Ab': 'G#',
+    'Bb': 'A#'
+  };
+
+  return enharmonics[n] || n;
+};
+
+/**
+ * Parsea un acorde en formato string ("G#m7/B") a sus componentes.
+ * @param {string} chordStr El texto del acorde.
+ * @returns {object} { root, suffix, bass } donde root y bass están normalizados a sostenidos.
+ */
+const parseChord = (chordStr) => {
+  // Regex para capturar: Raíz (A-G, opcional H, con opcional # o b), sufijo (resto antes del /), opcional /Bajo
+  const chordRegex = /^([A-H][#b]?)(.*?)(?:\/([A-H][#b]?))?$/;
+  const match = chordStr.match(chordRegex);
+  
+  if (!match) {
+    // Fallback por si hay un formato de acorde muy inusual, devolvemos como root
+    return { root: chordStr, suffix: '', bass: null };
+  }
+
+  const root = normalizeNote(match[1]);
+  const suffix = match[2] || '';
+  const bass = match[3] ? normalizeNote(match[3]) : null;
+
+  return { root, suffix, bass };
+};
+
+/**
+ * Reconstruye un acorde desde su objeto parseado.
+ * @param {object} chordObj { root, suffix, bass }
+ * @returns {string} El acorde en texto.
+ */
+const stringifyChord = ({ root, suffix, bass }) => {
+  return `${root}${suffix}${bass ? '/' + bass : ''}`;
+};
+
+/**
+ * Normaliza una clave ({key: ...})
+ */
+const normalizeKey = (keyStr) => {
+  let root = keyStr;
+  let mode = '';
+  if (keyStr.endsWith('m')) {
+    root = keyStr.slice(0, -1);
+    mode = 'm';
+  }
+  return normalizeNote(root) + mode;
+};
+
+/**
+ * Convierte un texto ChordPro a un objeto Song (AST).
+ * @param {string} text Contenido del archivo .cho
+ * @returns {object} AST Song
+ */
+const parseChordPro = (text) => {
+  const lines = text.split(/\r?\n/);
+  
+  const song = {
+    metadata: {
+      title: 'Canción sin título',
+      artist: 'Artista desconocido',
+      key: 'C'
+    },
+    lines: []
+  };
+
+  let inChorus = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i];
+    const trimmedLine = rawLine.trim();
+
+    // Líneas vacías
+    if (trimmedLine === '') {
+      song.lines.push({
+        type: 'empty',
+        elements: []
+      });
+      continue;
+    }
+
+    // Directivas {directiva: valor} o {directiva}
+    if (trimmedLine.startsWith('{') && trimmedLine.endsWith('}')) {
+      const directiveContent = trimmedLine.slice(1, -1).trim();
+      const colonIndex = directiveContent.indexOf(':');
+      
+      let name, value;
+      if (colonIndex !== -1) {
+        name = directiveContent.slice(0, colonIndex).trim().toLowerCase();
+        value = directiveContent.slice(colonIndex + 1).trim();
+      } else {
+        name = directiveContent.toLowerCase();
+        value = '';
+      }
+
+      // Procesar metadatos
+      if (name === 'title') {
+        song.metadata.title = value;
+      } else if (name === 'artist') {
+        song.metadata.artist = value;
+      } else if (name === 'key') {
+        song.metadata.key = normalizeKey(value);
+      } else if (name === 'capo') {
+        song.metadata.capo = parseInt(value, 10);
+      } else if (name === 'comment' || name === 'c') {
+        song.lines.push({
+          type: 'comment',
+          elements: [{ type: 'text', value }]
+        });
+      } else if (name === 'chorus' || name === 'soc') {
+        inChorus = true;
+      } else if (name === 'eoc') {
+        inChorus = false;
+      } else if (name === 'tab' || name === 't') { // Alternativa para tab
+        song.lines.push({
+          type: 'tab',
+          elements: [{ type: 'text', value }]
+        });
+      }
+      
+      continue; // No añadir como línea de letra
+    }
+
+    // Procesa líneas con acordes o texto normal
+    const elements = [];
+    
+    // Capturamos la tablatura usando regex o asumiendo que si inChorus no afecta a la captura de espacios iniciales.
+    let currentIndex = 0;
+    
+    // Capturar espacios iniciales
+    const leadingSpacesMatch = rawLine.match(/^(\s+)/);
+    if (leadingSpacesMatch) {
+      elements.push({ type: 'space', value: leadingSpacesMatch[1] });
+      currentIndex = leadingSpacesMatch[1].length;
+    }
+
+    let currentText = '';
+    
+    while (currentIndex < rawLine.length) {
+      const char = rawLine[currentIndex];
+
+      if (char === '[') {
+        // Encontramos un acorde. Guardar texto previo si lo hay.
+        if (currentText) {
+          elements.push({ type: 'text', value: currentText });
+          currentText = '';
+        }
+
+        const endBracket = rawLine.indexOf(']', currentIndex);
+        if (endBracket !== -1) {
+          const chordRaw = rawLine.substring(currentIndex + 1, endBracket);
+          // Parseamos y normalizamos el acorde, luego lo guardamos como string en el AST
+          const parsedChord = parseChord(chordRaw);
+          elements.push({ 
+            type: 'chord', 
+            value: stringifyChord(parsedChord) 
+          });
+          currentIndex = endBracket + 1;
+        } else {
+          // Si no hay cierre, tratamos el corchete como texto normal
+          currentText += '[';
+          currentIndex++;
+        }
+      } else {
+        currentText += char;
+        currentIndex++;
+      }
+    }
+
+    if (currentText) {
+      elements.push({ type: 'text', value: currentText });
+    }
+
+    song.lines.push({
+      type: inChorus ? 'chorus' : 'verse',
+      elements
+    });
+  }
+
+  return song;
+};
+
+
+/* --- js/notation.js --- */
+
+
+
+// Mapeos para diferentes notaciones
+const NOTATION_MAP = {
+  // Las claves son las notas en sostenidos (inglés)
+  'C': { latino: 'Do', aleman: 'C' },
+  'C#': { latino: 'Do#', aleman: 'C#' }, // Se convertirá a bemol si config.accidentalPreference === 'flats'
+  'D': { latino: 'Re', aleman: 'D' },
+  'D#': { latino: 'Re#', aleman: 'D#' },
+  'E': { latino: 'Mi', aleman: 'E' },
+  'F': { latino: 'Fa', aleman: 'F' },
+  'F#': { latino: 'Fa#', aleman: 'F#' },
+  'G': { latino: 'Sol', aleman: 'G' },
+  'G#': { latino: 'Sol#', aleman: 'G#' },
+  'A': { latino: 'La', aleman: 'A' },
+  'A#': { latino: 'La#', aleman: 'A#' },
+  'B': { latino: 'Si', aleman: 'H' }
+};
+
+// Conversión de sostenidos a bemoles
+const SHARPS_TO_FLATS = {
+  'C#': 'Db',
+  'D#': 'Eb',
+  'F#': 'Gb',
+  'G#': 'Ab',
+  'A#': 'Bb'
+};
+
+const FLATS_LATINO = {
+  'Db': 'Reb',
+  'Eb': 'Mib',
+  'Gb': 'Solb',
+  'Ab': 'Lab',
+  'Bb': 'Sib'
+};
+
+const FLATS_ALEMAN = {
+  'Db': 'Db',
+  'Eb': 'Eb',
+  'Gb': 'Gb',
+  'Ab': 'Ab',
+  'Bb': 'B' // Nota importante en alemán: Bb se escribe B
+};
+
+/**
+ * Convierte una nota base (en sostenidos) a la notación configurada.
+ * @param {string} note Nota base (ej. 'A#').
+ * @param {string} format 'latino', 'ingles', 'aleman'.
+ * @param {string} preference 'sharps' o 'flats'.
+ * @returns {string} Nota formateada.
+ */
+const formatNote = (note, format, preference) => {
+  if (!note) return '';
+
+  let isFlat = preference === 'flats' && SHARPS_TO_FLATS[note] !== undefined;
+
+  if (isFlat) {
+    const flatNote = SHARPS_TO_FLATS[note];
+    if (format === 'latino') return FLATS_LATINO[flatNote];
+    if (format === 'aleman') return FLATS_ALEMAN[flatNote];
+    return flatNote; // ingles
+  }
+
+  // Sostenidos
+  if (format === 'latino') return NOTATION_MAP[note]?.latino || note;
+  if (format === 'aleman') return NOTATION_MAP[note]?.aleman || note;
+  return note; // ingles
+};
+
+/**
+ * Formatea un acorde completo según la configuración.
+ * @param {string} chordStr Acorde parseado con sostenidos (ej. "G#m7/A#").
+ * @returns {string} Acorde formateado.
+ */
+const formatChord = (chordStr) => {
+  const { notation, accidentalPreference } = config;
+  const parsed = parseChord(chordStr);
+  
+  const rootFormat = formatNote(parsed.root, notation, accidentalPreference);
+  const bassFormat = parsed.bass ? formatNote(parsed.bass, notation, accidentalPreference) : null;
+
+  return `${rootFormat}${parsed.suffix}${bassFormat ? '/' + bassFormat : ''}`;
+};
+
+/**
+ * Formatea una clave ({key: ...})
+ */
+const formatKey = (keyStr) => {
+  if (!keyStr) return '';
+  let root = keyStr;
+  let mode = '';
+  if (keyStr.endsWith('m')) {
+    root = keyStr.slice(0, -1);
+    mode = 'm';
+  }
+  const { notation, accidentalPreference } = config;
+  return formatNote(root, notation, accidentalPreference) + mode;
+};
+
+
+/* --- js/transpose.js --- */
+
+
+/**
+ * Array de notas en notación inglesa con sostenidos.
+ * Cada índice representa un semitono.
+ */
+const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+/**
+ * Encuentra el índice de una nota en el array NOTES.
+ */
+const getNoteIndex = (note) => {
+  return NOTES.indexOf(note);
+};
+
+/**
+ * Transpone una nota específica (ej. 'C#') por un número de semitonos.
+ * @param {string} note Nota a transponer.
+ * @param {number} semitones Número de semitonos a transponer.
+ * @returns {string} Nueva nota transpuesta (en sostenidos).
+ */
+const transposeNote = (note, semitones) => {
+  if (!note) return note;
+  const index = getNoteIndex(note);
+  if (index === -1) return note; // No es una nota reconocida, la devolvemos igual
+  
+  // Cálculo seguro para números negativos y positivos usando módulo
+  const newIndex = (((index + semitones) % 12) + 12) % 12;
+  return NOTES[newIndex];
+};
+
+/**
+ * Transpone un acorde parseado.
+ * @param {string} chordStr Acorde en texto (ej. "G#m7/B").
+ * @param {number} semitones Semitonos a transponer.
+ * @returns {string} Acorde transpuesto en texto.
+ */
+const transposeChordString = (chordStr, semitones) => {
+  const parsed = parseChord(chordStr);
+  const newRoot = transposeNote(parsed.root, semitones);
+  const newBass = transposeNote(parsed.bass, semitones);
+  
+  return stringifyChord({
+    root: newRoot,
+    suffix: parsed.suffix,
+    bass: newBass
+  });
+};
+
+/**
+ * Transpone una clave ({key: ...}) y retorna un objeto con la nueva clave y el cálculo del Capo.
+ * @param {string} originalKey Clave original.
+ * @param {number} semitones Semitonos transpuestos.
+ * @returns {object} { newKey, suggestedCapo }
+ */
+const transposeKey = (originalKey, semitones) => {
+  if (!originalKey) return { newKey: '', suggestedCapo: 0 };
+  
+  let root = originalKey;
+  let mode = '';
+  if (originalKey.endsWith('m')) {
+    root = originalKey.slice(0, -1);
+    mode = 'm';
+  }
+  
+  const newRoot = transposeNote(root, semitones);
+  const suggestedCapo = (((semitones) % 12) + 12) % 12;
+  
+  return {
+    newKey: newRoot + mode,
+    suggestedCapo
+  };
+};
+
+/**
+ * Recibe un AST inmutable (Song) y retorna un nuevo AST transpuesto.
+ * @param {object} song Árbol AST original.
+ * @param {number} semitones Semitonos a transponer.
+ * @returns {object} Nuevo AST Song.
+ */
+const transposeSong = (song, semitones) => {
+  // Transponer clave si existe
+  let newKey = song.metadata.key;
+  let newCapo = song.metadata.capo;
+  
+  if (song.metadata.key) {
+    const keyInfo = transposeKey(song.metadata.key, semitones);
+    newKey = keyInfo.newKey;
+    newCapo = keyInfo.suggestedCapo || song.metadata.capo; // Muestra nuevo capo si es > 0, sino conserva el original o nada
+  }
+
+  const newSong = {
+    metadata: {
+      ...song.metadata,
+      key: newKey,
+      capo: newCapo
+    },
+    lines: song.lines.map(line => ({
+      type: line.type,
+      elements: line.elements.map(el => {
+        if (el.type === 'chord') {
+          return {
+            type: 'chord',
+            value: transposeChordString(el.value, semitones)
+          };
+        }
+        return el;
+      })
+    }))
+  };
+
+  return newSong;
+};
+
+
+/* --- js/align.js --- */
+/**
+ * Módulo de Alineación de Acordes.
+ * Recalcula la posición horizontal de cada acorde midiendo el texto real
+ * usando la API Range del DOM para soportar fuentes proporcionales y ligaduras.
+ */
+
+/**
+ * Calcula el ancho de un texto dentro de un nodo de texto.
+ * Extraído para poder ser mockeado en tests si es necesario.
+ * @param {Text} textNode Nodo de texto a medir.
+ * @param {number} offset Número de caracteres desde el inicio.
+ * @returns {number} Ancho en píxeles.
+ */
+const measureTextWidth = (textNode, offset) => {
+  // Si estamos en un entorno sin getBoundingClientRect (ej. jsdom simplificado), devolver 0 (o mockear)
+  if (!document.createRange) return 0;
+  
+  const range = document.createRange();
+  try {
+    // textNode puede ser dividido o múltiple, por simplificación
+    // el renderer debe asegurar que el texto previo al acorde sea un único nodo de texto contiguo.
+    range.setStart(textNode, 0);
+    range.setEnd(textNode, offset);
+    const rect = range.getBoundingClientRect();
+    return rect.width;
+  } catch (e) {
+    console.warn("No se pudo medir el texto:", e);
+    return 0;
+  }
+};
+
+/**
+ * Recorre el contenedor de la canción y alinea todos los acordes.
+ * @param {HTMLElement} container Contenedor donde se renderizó la canción.
+ */
+const alignChords = (container) => {
+  // Buscar todas las líneas que contengan acordes
+  const lines = container.querySelectorAll('.song-line');
+  
+  lines.forEach(line => {
+    // Los contenedores de acordes están dentro de la línea
+    const chordWrappers = line.querySelectorAll('.chord-wrapper');
+    if (chordWrappers.length === 0) return;
+
+    let accumulatedWidth = 0;
+
+    // Para una alineación perfecta, medimos desde el principio de la línea hasta la posición de cada acorde.
+    // Como las líneas están generadas secuencialmente: <span class="text-segment">texto</span><span class="chord-wrapper">...</span>
+    
+    // Iteramos por los nodos hijos de la línea
+    const childNodes = Array.from(line.childNodes);
+    
+    childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        if (node.classList.contains('text-segment')) {
+          // Medimos el texto de este segmento
+          const textNode = node.firstChild; // Asumimos que dentro de text-segment solo hay texto
+          if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+            accumulatedWidth += measureTextWidth(textNode, textNode.length);
+          }
+        } else if (node.classList.contains('chord-wrapper')) {
+          // Asignamos la posición acumulada al contenedor absoluto
+          node.style.left = `${accumulatedWidth}px`;
+        }
+      }
+    });
+  });
+};
+
+
+/* --- js/renderer.js --- */
+
+
+/**
+ * Renderiza la canción completa en un contenedor del DOM.
+ * @param {object} song Árbol AST de la canción.
+ * @param {HTMLElement} container Contenedor donde renderizar.
+ */
+const renderSong = (song, container) => {
+  // Limpiar contenedor
+  container.innerHTML = '';
+
+  // Renderizar Cabecera
+  const header = document.createElement('header');
+  header.className = 'song-header mb-4';
+
+  const title = document.createElement('h1');
+  title.className = 'song-title';
+  title.textContent = song.metadata.title;
+  header.appendChild(title);
+
+  const artist = document.createElement('h2');
+  artist.className = 'song-artist text-muted h5';
+  artist.textContent = song.metadata.artist;
+  header.appendChild(artist);
+
+
+  container.appendChild(header);
+
+  // Renderizar Cuerpo (Letra y Acordes)
+  const body = document.createElement('main');
+  body.className = 'song-body';
+
+  song.lines.forEach(line => {
+    // Si la línea está vacía, insertar un salto de línea
+    if (line.type === 'empty') {
+      const brDiv = document.createElement('div');
+      brDiv.className = 'song-line empty-line';
+      brDiv.style.height = '1.5em';
+      body.appendChild(brDiv);
+      return;
+    }
+
+    const lineDiv = document.createElement('div');
+    lineDiv.className = `song-line ${line.type}-line`;
+
+    if (line.type === 'chorus') {
+      lineDiv.classList.add('ps-3', 'border-start', 'border-3', 'border-primary', 'my-1');
+    } else if (line.type === 'tab') {
+      lineDiv.classList.add('font-monospace', 'bg-light', 'p-2', 'rounded');
+    } else if (line.type === 'comment') {
+      lineDiv.classList.add('fst-italic', 'text-muted', 'my-2');
+    }
+
+    // Elementos de la línea
+    line.elements.forEach(el => {
+      if (el.type === 'text' || el.type === 'space') {
+        const textSpan = document.createElement('span');
+        textSpan.className = 'text-segment';
+        // Reemplazar espacios por espacios no rompibles explícitamente no es necesario 
+        // porque white-space: nowrap y pre-wrap en CSS lo manejarán, pero aseguramos
+        // el texto literal.
+        textSpan.textContent = el.value;
+        lineDiv.appendChild(textSpan);
+      } else if (el.type === 'chord') {
+        // Envoltura del acorde (width 0, in-line)
+        const wrapper = document.createElement('span');
+        wrapper.className = 'chord-wrapper';
+        
+        // El acorde en sí (position absolute)
+        const chordSpan = document.createElement('span');
+        chordSpan.className = 'chord fw-bold text-primary';
+        chordSpan.textContent = formatChord(el.value);
+        
+        wrapper.appendChild(chordSpan);
+        lineDiv.appendChild(wrapper);
+      }
+    });
+
+    body.appendChild(lineDiv);
+  });
+
+  container.appendChild(body);
+};
+
+
+/* --- js/ui.js --- */
+/**
+ * Módulo de UI.
+ * Configura los eventos de los controles de la interfaz y gestiona el modo oscuro.
+ */
+
+
+const initUI = (onTranspose, onToggleChords) => {
+  // Configuración del tema (Modo Oscuro/Claro)
+  const themeToggleBtn = document.getElementById('btn-theme-toggle');
+  
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    if (themeToggleBtn) {
+      themeToggleBtn.textContent = theme === 'dark' ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    }
+  };
+
+  // Inicializar tema
+  let currentTheme = config.theme === 'oscuro' ? 'dark' : 'light';
+  applyTheme(currentTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(currentTheme);
+    });
+  }
+
+  // Controles de Transposición
+  const btnUp = document.getElementById('btn-transpose-up');
+  const btnDown = document.getElementById('btn-transpose-down');
+  const btnReset = document.getElementById('btn-transpose-reset');
+
+  if (btnUp) btnUp.addEventListener('click', () => onTranspose(1));
+  if (btnDown) btnDown.addEventListener('click', () => onTranspose(-1));
+  if (btnReset) btnReset.addEventListener('click', () => onTranspose(0, true)); // true indica reset
+
+  // Visibilidad de Acordes
+  const btnToggleChords = document.getElementById('btn-toggle-chords');
+  let chordsVisible = true;
+
+  if (btnToggleChords) {
+    btnToggleChords.addEventListener('click', () => {
+      chordsVisible = !chordsVisible;
+      
+      if (chordsVisible) {
+        document.body.classList.remove('hide-chords');
+        btnToggleChords.textContent = config.i18n.hideChords || 'Ocultar acordes';
+      } else {
+        document.body.classList.add('hide-chords');
+        btnToggleChords.textContent = config.i18n.showChords || 'Mostrar acordes';
+      }
+      
+      onToggleChords(chordsVisible);
+    });
+  }
+};
+
+
+/* --- js/main.js --- */
+
+
+
+
+
+
+// Estado global de la aplicación
+const state = {
+  originalSong: null,
+  currentSong: null,
+  transposeSteps: 0
+};
+
+// API Pública para permitir extensiones o acceso desde la consola
+window.cancionero = {
+  hooks: {
+    onBeforeRender: [],
+    onAfterRender: [],
+    onTranspose: [],
+  },
+  
+  registerHook(hookName, callback) {
+    if (this.hooks[hookName]) {
+      this.hooks[hookName].push(callback);
+    }
+  },
+
+  getSong() {
+    return state.currentSong;
+  },
+
+  transpose(steps, isReset = false) {
+    if (!state.originalSong) return;
+
+    if (isReset) {
+      state.transposeSteps = 0;
+    } else {
+      state.transposeSteps += steps;
+    }
+
+    // Aplicar transposición sobre la canción ORIGINAL para evitar errores por acumulación
+    state.currentSong = transposeSong(state.originalSong, state.transposeSteps);
+    
+    // Llamar a hooks
+    this.hooks.onTranspose.forEach(cb => cb(state.currentSong));
+
+    this.render();
+  },
+
+  render() {
+    if (!state.currentSong) return;
+
+    const container = document.getElementById('song-container');
+    if (!container) return;
+
+    // Hook onBeforeRender
+    let songToRender = state.currentSong;
+    this.hooks.onBeforeRender.forEach(cb => {
+      songToRender = cb(songToRender) || songToRender;
+    });
+
+    // 1. Renderizar DOM
+    renderSong(songToRender, container);
+
+    // 2. Alinear Acordes usando medición real de texto (Range API)
+    // Se usa requestAnimationFrame para asegurar que el navegador ha calculado las fuentes
+    requestAnimationFrame(() => {
+      alignChords(container);
+      
+      // Hook onAfterRender
+      this.hooks.onAfterRender.forEach(cb => cb(container));
+    });
+  },
+  
+  loadFromText(text) {
+    state.originalSong = parseChordPro(text);
+    state.currentSong = state.originalSong;
+    state.transposeSteps = 0;
+    this.render();
+  }
+};
+
+const init = () => {
+  // Configurar UI
+  initUI(
+    (steps, isReset) => window.cancionero.transpose(steps, isReset),
+    (isVisible) => {
+      // Si se vuelven a mostrar los acordes, asegurarse de que estén alineados
+      if (isVisible) {
+        requestAnimationFrame(() => {
+          alignChords(document.getElementById('song-container'));
+        });
+      }
+    }
+  );
+
+  // Intentar cargar la canción desde el script incrustado en el HTML generado
+  const scriptTag = document.getElementById('original-chordpro');
+  if (scriptTag) {
+    let content = scriptTag.textContent;
+    // Si era JSON, parsearlo, si era texto crudo, usarlo directamente.
+    // Según la especificación "contenido ChordPro original (el texto crudo)".
+    window.cancionero.loadFromText(content);
+  }
+
+  // Reflujo de alineación si se redimensiona la ventana (puede cambiar fuentes o wrap)
+  window.addEventListener('resize', () => {
+    alignChords(document.getElementById('song-container'));
+  });
+};
+
+// Inicialización
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+
+})();
+</script>
+
+</body>
+</html>

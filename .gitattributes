@@ -1,0 +1,2 @@
+# Forzar LF para todos los archivos de texto (recomendado para proyectos web)
+* text=auto eol=lf

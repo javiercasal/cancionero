@@ -1,0 +1,95 @@
+/* Estilos Personalizados - Generador de Cancionero */
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.8; /* Mucho espacio entre líneas para dejar lugar a los acordes */
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Área de canción */
+#song-container {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* 
+  Línea de la canción.
+  white-space: nowrap evita que el texto haga wrap y rompa la alineación de acordes.
+  overflow-x: auto permite que en móviles se pueda hacer scroll horizontal.
+*/
+.song-line {
+  position: relative;
+  white-space: pre; /* pre preserva espacios en blanco literalmente */
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 1.2em; /* Espacio para los acordes de esta línea */
+  margin-bottom: 0.2em;
+  min-height: 2.8em;  /* Asegura que haya espacio aunque no haya acordes */
+}
+
+/* Línea sin acordes, menor espacio superior */
+.empty-line {
+  min-height: 1.5em;
+  padding-top: 0;
+}
+
+/* Estribillos */
+.chorus-line {
+  background-color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .chorus-line {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 
+  Contenedor del acorde. 
+  Ancho 0 y display inline para no afectar el flujo del texto.
+*/
+.chord-wrapper {
+  position: absolute; /* Sacamos el acorde del flujo de texto para no romper el kerning de la letra */
+  top: 0;
+  /* El JS asignará la propiedad 'left' */
+}
+
+/* 
+  El acorde visual. 
+  Position absolute basado en el wrapper. 
+*/
+.chord {
+  position: absolute;
+  top: 0;
+  font-size: 0.9em;
+  /* El JS calculará el 'left' */
+}
+
+/* Ocultar acordes */
+.hide-chords .chord-wrapper,
+.hide-chords .chord {
+  display: none !important;
+}
+.hide-chords .song-line {
+  padding-top: 0;
+  min-height: 1.8em;
+}
+
+/* Barra de controles */
+.controls-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--bs-body-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  padding: 10px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+[data-bs-theme="dark"] .controls-bar {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
