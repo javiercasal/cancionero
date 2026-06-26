@@ -147,7 +147,7 @@ export function parseChordPro(text) {
   const metadata = {};
   const parsedLines = [];
   let inChorus = false;
-  let inTab = false; // <-- NUEVO: estado para tablatura
+  let inTab = false;
 
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i];
@@ -155,7 +155,6 @@ export function parseChordPro(text) {
 
     // Líneas vacías
     if (trimmed === '') {
-      // Si estamos dentro de una tablatura, la línea vacía también se marca como tab
       parsedLines.push({
         type: inTab ? 'tab' : 'line',
         elements: [{ type: 'text', value: '' }],
@@ -191,19 +190,17 @@ export function parseChordPro(text) {
         continue;
       }
 
-      // --- NUEVO: Inicio / Fin de Tablatura ---
+      // Inicio / Fin de Tablatura
       if (directive.name === 'sot') {
         inTab = true;
-        // No agregamos línea al AST (es solo un marcador)
         continue;
       }
       if (directive.name === 'eot') {
         inTab = false;
-        // No agregamos línea al AST
         continue;
       }
 
-      // Otras directivas (comment, tab, define, tempo, time, etc.)
+      // Otras directivas
       parsedLines.push({
         type: 'directive_line',
         directive: directive.name,
@@ -216,13 +213,13 @@ export function parseChordPro(text) {
     // Línea normal (con posible contenido y acordes)
     const elements = parseLineWithChords(raw);
     parsedLines.push({
-      type: inTab ? 'tab' : 'line', // <-- Si estamos en tab, se marca como 'tab'
+      type: inTab ? 'tab' : 'line',
       elements,
       isChorus: inChorus,
     });
   }
 
-  // Si no hay líneas pero el input no está vacío, añadir una línea vacía (fallback)
+  // Fallback
   if (parsedLines.length === 0 && text && text.trim() !== '') {
     parsedLines.push({
       type: 'line',
@@ -237,10 +234,8 @@ export function parseChordPro(text) {
   };
 }
 
-// Alias para compatibilidad (si se usa en otro lado)
 export const parseChordProLegacy = parseChordPro;
 
-// Funciones auxiliares para extraer información del AST
 export function getPlainText(line) {
   if (line.type !== 'line' && line.type !== 'tab') return '';
   return line.elements
